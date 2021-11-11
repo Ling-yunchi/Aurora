@@ -18,24 +18,30 @@
     <ClCompile Include="sqlwr.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="bTree.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="LexicalAnalysis.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="BTree.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bTree.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="LexicalAnalysis.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BTree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
