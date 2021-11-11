@@ -139,13 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BTree.cpp" />
+    <ClCompile Include="bTree.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="LexicalAnalysis.cpp" />
     <ClCompile Include="sqlwr.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BTree.h" />
+    <ClInclude Include="bTree.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="LexicalAnalysis.h" />
   </ItemGroup>

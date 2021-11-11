@@ -18,7 +18,7 @@
     <ClCompile Include="sqlwr.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BTree.cpp">
+    <ClCompile Include="bTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
@@ -29,7 +29,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BTree.h">
+    <ClInclude Include="bTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="LexicalAnalysis.h">

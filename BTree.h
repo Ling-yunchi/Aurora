@@ -2,13 +2,15 @@
 
 class BTreeNode
 {
-	int* keys;
+	int* keys;	//关键字数组,对应下标孩子节点数组指向的BTreeNode中的所有关键字小于该关键字
 	int t;
-	BTreeNode** child;
 	int num;
 	bool leaf;
+	BTreeNode* parent;
+	BTreeNode** child;
+
 public:
-	BTreeNode(int t, bool leaf);
+	BTreeNode(BTreeNode* parent,int t, bool leaf);
 
 	BTreeNode* search(int key);
 

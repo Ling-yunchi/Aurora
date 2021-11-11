@@ -1,11 +1,12 @@
 ﻿#include "BTree.h"
 
-BTreeNode::BTreeNode(int t, bool leaf) :
+BTreeNode::BTreeNode(BTreeNode* parent,int t, bool leaf) :
 	keys(new int[2 * t - 1]),
 	t(t),
-	child(new BTreeNode* [2 * t]),
 	num(0),
-	leaf(leaf)
+	leaf(leaf),
+	parent(parent),
+	child(new BTreeNode* [2 * t])
 {}
 
 BTreeNode* BTreeNode::search(int key)
@@ -50,7 +51,7 @@ void BTreeNode::insert_non_full(int key)
 void BTreeNode::split_child(int idx, BTreeNode* y)
 {
 	//新建节点存储y中(t-1)个keys
-	auto z = new BTreeNode(y->t, y->leaf);
+	auto z = new BTreeNode(this, y->t, y->leaf);
 	z->num = t - 1;
 	//复制y的最后(t-1)个key到z
 	for (int i = 0; i < t - 1; i++)
@@ -84,14 +85,14 @@ BTreeNode* BTree::search(int k)
 void BTree::insert(int key)
 {
 	if (root == nullptr) {
-		root = new BTreeNode(t, true);
+		root = new BTreeNode(nullptr, t, true);
 		root->keys[0] = key;
 		root->num = 1;
 	}
 	else {
 		if (root->num == 2 * t - 1) {	//根节点满,拆分为子节点
 			//创建新的根节点
-			auto new_root = new BTreeNode(t, false);
+			auto new_root = new BTreeNode(nullptr, t, false);
 			new_root->child[0] = root;
 			new_root->split_child(0, root);
 
