@@ -6,19 +6,41 @@ using namespace std;
 
 const int M = 3;
 
+class BTree;
 class BTreeNode
 {
-	int size_;
 	vector<int> keys_;
 	vector<BTreeNode*> children_;
 	vector<Data*> data_;
+	int size_;
+	bool leaf_;
 public:
-	BTreeNode();
+	BTreeNode(bool leaf);
+
+	Data* search(int key);
+
+	void insert_non_full(int key, Data* data);
+
+	void split_child(int idx, BTreeNode* child);
+
+	void ldr();
+	
+	friend BTree;
 };
 
 class BTree
 {
+	BTreeNode* root_;
+public:
+	BTree() :root_(nullptr) {}
 
+	Data* search(int key);
+
+	void insert(int key, Data* data);
+
+	void ldr();
+
+	void remove(int key);
 	
 };
 
