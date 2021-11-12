@@ -80,11 +80,11 @@ void BTreeNode::ldr()
 {
 	if (leaf_)
 		for (int i = 0; i < size_; i++)
-			cout << keys_[i] << ":" << data_[i]->Data << " ";
+			cout << keys_[i] << ":" << data_[i]->data_ << " ";
 	else {
 		for (int i = 0; i < size_; i++) {
 			children_[i]->ldr();
-			cout << keys_[i] << ":" << data_[i]->Data << " ";
+			cout << keys_[i] << ":" << data_[i]->data_ << " ";
 		}
 		children_[size_]->ldr();
 	}
