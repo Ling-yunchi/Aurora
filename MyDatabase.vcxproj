@@ -35,20 +35,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -139,17 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BTree.cpp" />
-    <ClCompile Include="Data.cpp" />
-    <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="LexicalAnalysis.cpp" />
-    <ClCompile Include="sqlwr.cpp" />
+    <ClCompile Include="src\BTree.cpp" />
+    <ClCompile Include="src\Data.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\LexicalAnalysis.cpp" />
+    <ClCompile Include="src\sqlwr.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BTree.h" />
-    <ClInclude Include="Data.h" />
-    <ClInclude Include="Engine.h" />
-    <ClInclude Include="LexicalAnalysis.h" />
+    <ClInclude Include="src\BTree.h" />
+    <ClInclude Include="src\Data.h" />
+    <ClInclude Include="src\Engine.h" />
+    <ClInclude Include="src\LexicalAnalysis.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

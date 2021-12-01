@@ -19,12 +19,30 @@ public:
 
 	Data* search(int key);
 
+	int find_key(int key);
+
 	void insert_non_full(int key, Data* data);
+
+	void remove(int key);
+
+	void remove_from_leaf(int idx);
+
+	void remove_from_non_leaf(int idx);
+
+	void fill(int idx);
+
+	void borrow_from_prev(int idx);
+
+	void borrow_from_next(int idx);
+
+	void merge(int idx);
 
 	void split_child(int idx, BTreeNode* child);
 
 	void ldr();
-	
+
+	void show_node();
+
 	friend BTree;
 };
 
@@ -41,6 +59,6 @@ public:
 	void ldr();
 
 	void remove(int key);
-	
+
 };
 

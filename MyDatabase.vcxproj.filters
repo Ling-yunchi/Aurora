@@ -15,33 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sqlwr.cpp">
+    <ClCompile Include="src\sqlwr.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp">
+    <ClCompile Include="src\Engine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LexicalAnalysis.cpp">
+    <ClCompile Include="src\LexicalAnalysis.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BTree.cpp">
+    <ClCompile Include="src\BTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Data.cpp">
+    <ClCompile Include="src\Data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LexicalAnalysis.h">
+    <ClInclude Include="src\LexicalAnalysis.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
+    <ClInclude Include="src\Engine.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BTree.h">
+    <ClInclude Include="src\BTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Data.h">
+    <ClInclude Include="src\Data.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
