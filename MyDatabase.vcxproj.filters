@@ -18,31 +18,50 @@
     <ClCompile Include="src\sqlwr.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine.cpp">
+    <ClCompile Include="src\parser\Engine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\LexicalAnalysis.cpp">
+    <ClCompile Include="src\parser\LexicalAnalysis.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\BTree.cpp">
+    <ClCompile Include="src\storage\BTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Data.cpp">
+    <ClCompile Include="src\storage\Data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\log\Logger.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\LexicalAnalysis.h">
+    <ClInclude Include="src\parser\LexicalAnalysis.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine.h">
+    <ClInclude Include="src\parser\Engine.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\BTree.h">
+    <ClInclude Include="src\storage\BTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Data.h">
+    <ClInclude Include="src\storage\Data.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\log\Logger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\storage\Page.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\storage\serializable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="log.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data.txt" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

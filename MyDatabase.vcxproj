@@ -72,6 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\boost_1_77_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\boost_1_77_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -85,13 +87,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,6 +123,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,17 +143,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\BTree.cpp" />
-    <ClCompile Include="src\Data.cpp" />
-    <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\LexicalAnalysis.cpp" />
+    <ClCompile Include="src\log\Logger.cpp" />
+    <ClCompile Include="src\storage\BTree.cpp" />
+    <ClCompile Include="src\storage\Data.cpp" />
+    <ClCompile Include="src\parser\Engine.cpp" />
+    <ClCompile Include="src\parser\LexicalAnalysis.cpp" />
     <ClCompile Include="src\sqlwr.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\BTree.h" />
-    <ClInclude Include="src\Data.h" />
-    <ClInclude Include="src\Engine.h" />
-    <ClInclude Include="src\LexicalAnalysis.h" />
+    <ClInclude Include="src\log\Logger.h" />
+    <ClInclude Include="src\storage\BTree.h" />
+    <ClInclude Include="src\storage\Data.h" />
+    <ClInclude Include="src\parser\Engine.h" />
+    <ClInclude Include="src\parser\LexicalAnalysis.h" />
+    <ClInclude Include="src\storage\Page.h" />
+    <ClInclude Include="src\storage\serializable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="log.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="data.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
