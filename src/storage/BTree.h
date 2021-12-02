@@ -2,7 +2,6 @@
 #include <vector>
 
 #include "Data.h"
-using namespace std;
 
 namespace btree
 {
@@ -11,10 +10,10 @@ namespace btree
 	class BTree;
 	class BTreeNode
 	{
-		vector<int> keys_;
-		vector<BTreeNode*> children_;
-		vector<Data*> data_;
-		int size_;
+		std::vector<int> keys_;
+		std::vector<BTreeNode*> children_;
+		std::vector<Data*> data_;
+		int size_ = 0;
 		bool leaf_;
 	public:
 		BTreeNode(bool leaf);
@@ -52,9 +51,9 @@ namespace btree
 
 	class BTree
 	{
-		BTreeNode* root_;
+		BTreeNode* root_ = nullptr;
 	public:
-		BTree() :root_(nullptr) {}
+		BTree() = default;
 
 		~BTree();
 

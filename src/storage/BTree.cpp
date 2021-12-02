@@ -1,14 +1,13 @@
 #include "BTree.h"
 
 #include <iostream>
+#include "../log/Logger.h"
 
-btree::BTreeNode::BTreeNode(bool leaf)
+btree::BTreeNode::BTreeNode(bool leaf) : leaf_(leaf)
 {
 	keys_.resize(order * 2 - 1);
 	children_.resize(order * 2);
 	data_.resize(order * 2 - 1);
-	size_ = 0;
-	leaf_ = leaf;
 }
 
 Data* btree::BTreeNode::search(int key)
@@ -38,9 +37,14 @@ void btree::BTreeNode::insert_non_full(int key, Data* data)
 			data_[idx + 1] = data_[idx];
 			idx--;
 		}
-		keys_[idx + 1] = key;
-		data_[idx + 1] = data;
-		size_++;
+		if (keys_[idx] == key) {
+			logger.error("BTree insert repetition key! insert fail!");
+		}
+		else {
+			keys_[idx + 1] = key;
+			data_[idx + 1] = data;
+			size_++;
+		}
 	}
 	else {
 		while (idx >= 0 && keys_[idx] > key) idx--;
@@ -273,30 +277,30 @@ void btree::BTreeNode::ldr()
 	if (leaf_)
 		for (int i = 0; i < size_; i++) {
 			//if (keys_[i] != data_[i]->data_)
-			cout << keys_[i] << ":" << data_[i]->data_ << " ";
+			std::cout << keys_[i] << ":" << data_[i]->data_ << " ";
 		}
 	else {
 		for (int i = 0; i < size_; i++) {
 			children_[i]->ldr();
 			//if (keys_[i] != data_[i]->data_)
-			cout << keys_[i] << ":" << data_[i]->data_ << " ";
+			std::cout << keys_[i] << ":" << data_[i]->data_ << " ";
 		}
 		children_[size_]->ldr();
 	}
 }
 
 void btree::BTreeNode::show_node() {
-	cout << "----------" << endl;
+	std::cout << "----------" << std::endl;
 	for (int i = 0; i < size_; i++)
-		cout << keys_[i] << " ";
-	cout << endl;
+		std::cout << keys_[i] << " ";
+	std::cout << std::endl;
 	for (int i = 0; i < size_; i++)
-		cout << children_[i] << " ";
-	cout << endl;
+		std::cout << children_[i] << " ";
+	std::cout << std::endl;
 	for (int i = 0; i < size_; i++)
-		cout << data_[i] << " ";
-	cout << endl;
-	cout << "----------" << endl;
+		std::cout << data_[i] << " ";
+	std::cout << std::endl;
+	std::cout << "----------" << std::endl;
 }
 
 void btree::BTreeNode::clear() {
