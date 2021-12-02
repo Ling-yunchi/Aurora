@@ -4,61 +4,68 @@
 #include "Data.h"
 using namespace std;
 
-const int M = 3;
-
-class BTree;
-class BTreeNode
+namespace btree
 {
-	vector<int> keys_;
-	vector<BTreeNode*> children_;
-	vector<Data*> data_;
-	int size_;
-	bool leaf_;
-public:
-	BTreeNode(bool leaf);
+	constexpr int order = 3;
 
-	Data* search(int key);
+	class BTree;
+	class BTreeNode
+	{
+		vector<int> keys_;
+		vector<BTreeNode*> children_;
+		vector<Data*> data_;
+		int size_;
+		bool leaf_;
+	public:
+		BTreeNode(bool leaf);
 
-	int find_key(int key);
+		Data* search(int key);
 
-	void insert_non_full(int key, Data* data);
+		int find_key(int key);
 
-	void remove(int key);
+		void insert_non_full(int key, Data* data);
 
-	void remove_from_leaf(int idx);
+		void remove(int key);
 
-	void remove_from_non_leaf(int idx);
+		void remove_from_leaf(int idx);
 
-	void fill(int idx);
+		void remove_from_non_leaf(int idx);
 
-	void borrow_from_prev(int idx);
+		void fill(int idx);
 
-	void borrow_from_next(int idx);
+		void borrow_from_prev(int idx);
 
-	void merge(int idx);
+		void borrow_from_next(int idx);
 
-	void split_child(int idx, BTreeNode* child);
+		void merge(int idx);
 
-	void ldr();
+		void split_child(int idx, BTreeNode* child);
 
-	void show_node();
+		void ldr();
 
-	friend BTree;
-};
+		void show_node();
 
-class BTree
-{
-	BTreeNode* root_;
-public:
-	BTree() :root_(nullptr) {}
+		void clear();
 
-	Data* search(int key);
+		friend BTree;
+	};
 
-	void insert(int key, Data* data);
+	class BTree
+	{
+		BTreeNode* root_;
+	public:
+		BTree() :root_(nullptr) {}
 
-	void ldr();
+		~BTree();
 
-	void remove(int key);
+		Data* search(int key);
 
-};
+		void insert(int key, Data* data);
+
+		void ldr();
+
+		void remove(int key);
+
+	};
+}
 

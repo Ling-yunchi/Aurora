@@ -2,16 +2,16 @@
 
 #include <iostream>
 
-BTreeNode::BTreeNode(bool leaf)
+btree::BTreeNode::BTreeNode(bool leaf)
 {
-	keys_.resize(M * 2 - 1);
-	children_.resize(M * 2);
-	data_.resize(M * 2 - 1);
+	keys_.resize(order * 2 - 1);
+	children_.resize(order * 2);
+	data_.resize(order * 2 - 1);
 	size_ = 0;
 	leaf_ = leaf;
 }
 
-Data* BTreeNode::search(int key)
+Data* btree::BTreeNode::search(int key)
 {
 	int idx = find_key(key);
 	if (idx == size_) children_[idx]->search(key);
@@ -21,7 +21,7 @@ Data* BTreeNode::search(int key)
 }
 
 //返回第一个大于等于key的下标
-int BTreeNode::find_key(int key)
+int btree::BTreeNode::find_key(int key)
 {
 	int idx = 0;
 	while (idx < size_ && keys_[idx] < key) idx++;
@@ -29,7 +29,7 @@ int BTreeNode::find_key(int key)
 }
 
 //插入一个未满的节点
-void BTreeNode::insert_non_full(int key, Data* data)
+void btree::BTreeNode::insert_non_full(int key, Data* data)
 {
 	int idx = size_ - 1;
 	if (leaf_ == true) {
@@ -44,7 +44,7 @@ void BTreeNode::insert_non_full(int key, Data* data)
 	}
 	else {
 		while (idx >= 0 && keys_[idx] > key) idx--;
-		if (children_[idx + 1]->size_ == M * 2 - 1) {
+		if (children_[idx + 1]->size_ == order * 2 - 1) {
 			split_child(idx + 1, children_[idx + 1]);
 			if (keys_[idx + 1] < key) idx++;
 		}
@@ -52,7 +52,7 @@ void BTreeNode::insert_non_full(int key, Data* data)
 	}
 }
 
-void BTreeNode::remove(int key)
+void btree::BTreeNode::remove(int key)
 {
 	int idx = find_key(key);
 	if (idx < size_ && keys_[idx] == key) {
@@ -65,7 +65,7 @@ void BTreeNode::remove(int key)
 		bool flag = idx == size_;
 
 		//如果要删除的孩子节点大小小于M,填充该孩子节点
-		if (children_[idx]->size_ < M)
+		if (children_[idx]->size_ < order)
 			fill(idx);	//size_的值可能被改变
 
 		if (flag && idx > size_)
@@ -75,7 +75,7 @@ void BTreeNode::remove(int key)
 	}
 }
 
-void BTreeNode::remove_from_leaf(int idx)
+void btree::BTreeNode::remove_from_leaf(int idx)
 {
 	delete data_[idx];
 	for (int i = idx + 1; i < size_; i++) {
@@ -86,12 +86,12 @@ void BTreeNode::remove_from_leaf(int idx)
 	size_--;
 }
 
-void BTreeNode::remove_from_non_leaf(int idx)
+void btree::BTreeNode::remove_from_non_leaf(int idx)
 {
 	delete data_[idx];
 	data_[idx] = nullptr;
 	int key = keys_[idx];
-	if (children_[idx]->size_ >= M) {
+	if (children_[idx]->size_ >= order) {
 		//找前驱
 		BTreeNode* pred = children_[idx];
 		while (!pred->leaf_)
@@ -105,7 +105,7 @@ void BTreeNode::remove_from_non_leaf(int idx)
 		//删除前驱
 		children_[idx]->remove(pred->keys_[pred->size_ - 1]);
 	}
-	else if (children_[idx + 1]->size_ >= M) {
+	else if (children_[idx + 1]->size_ >= order) {
 		BTreeNode* succ = children_[idx + 1];
 		while (!succ->leaf_)
 			succ = succ->children_[0];
@@ -122,13 +122,13 @@ void BTreeNode::remove_from_non_leaf(int idx)
 }
 
 //填充children[i]节点使其大小大于M
-void BTreeNode::fill(int idx)
+void btree::BTreeNode::fill(int idx)
 {
 	//若要填充的节点下标不为0(有左兄弟)且左兄弟大小大于等于M,从左兄弟借节点
-	if (idx != 0 && children_[idx - 1]->size_ >= M)
+	if (idx != 0 && children_[idx - 1]->size_ >= order)
 		borrow_from_prev(idx);
 	//若有右兄弟且右兄弟大小大于等于M,从右兄弟借节点
-	else if (idx != size_ && children_[idx + 1]->size_ >= M)
+	else if (idx != size_ && children_[idx + 1]->size_ >= order)
 		borrow_from_next(idx);
 	else {
 
@@ -140,7 +140,7 @@ void BTreeNode::fill(int idx)
 }
 
 //向左兄弟借节点
-void BTreeNode::borrow_from_prev(int idx)
+void btree::BTreeNode::borrow_from_prev(int idx)
 {
 	BTreeNode* child = children_[idx];
 	BTreeNode* sibling = children_[idx - 1];
@@ -172,7 +172,7 @@ void BTreeNode::borrow_from_prev(int idx)
 }
 
 //从右兄弟借节点
-void BTreeNode::borrow_from_next(int idx)
+void btree::BTreeNode::borrow_from_next(int idx)
 {
 	BTreeNode* child = children_[idx];
 	BTreeNode* sibling = children_[idx + 1];
@@ -203,22 +203,21 @@ void BTreeNode::borrow_from_next(int idx)
 
 //合并children_[idx + 1]到children_[idx],合并后children_[idx + 1]会被释放
 //children_[idx]的大小小于M
-void BTreeNode::merge(int idx)
+void btree::BTreeNode::merge(int idx)
 {
-	//TODO children操作有误
 	BTreeNode* child = children_[idx];
 	BTreeNode* sibling = children_[idx + 1];
 
-	child->keys_[M - 1] = keys_[idx];
-	child->data_[M - 1] = data_[idx];
+	child->keys_[order - 1] = keys_[idx];
+	child->data_[order - 1] = data_[idx];
 
 	for (int i = 0; i < sibling->size_; i++) {
-		child->keys_[i + M] = sibling->keys_[i];
-		child->data_[i + M] = sibling->data_[i];
+		child->keys_[i + order] = sibling->keys_[i];
+		child->data_[i + order] = sibling->data_[i];
 	}
 	if (!child->leaf_)
 		for (int i = 0; i <= sibling->size_; i++)
-			child->children_[i + M] = sibling->children_[i];
+			child->children_[i + order] = sibling->children_[i];
 
 	for (int i = idx + 1; i < size_; i++) {
 		keys_[i - 1] = keys_[i];
@@ -236,24 +235,24 @@ void BTreeNode::merge(int idx)
 }
 
 //分裂孩子节点,child为children[idx]
-void BTreeNode::split_child(int idx, BTreeNode* child)
+void btree::BTreeNode::split_child(int idx, BTreeNode* child)
 {
 	auto new_node = new BTreeNode(child->leaf_);
-	new_node->size_ = M - 1;
+	new_node->size_ = order - 1;
 
 	//拷贝child的后半段数据
-	for (int i = 0; i < M - 1; i++) {
-		new_node->keys_[i] = child->keys_[i + M];
-		new_node->data_[i] = child->data_[i + M];
+	for (int i = 0; i < order - 1; i++) {
+		new_node->keys_[i] = child->keys_[i + order];
+		new_node->data_[i] = child->data_[i + order];
 	}
 
 	//若子节点不为叶子节点,拷贝孩子信息
 	if (!child->leaf_)
-		for (int i = 0; i < M; i++)
-			new_node->children_[i] = child->children_[i + M];
+		for (int i = 0; i < order; i++)
+			new_node->children_[i] = child->children_[i + order];
 
 	//减少数量代替删除
-	child->size_ = M - 1;
+	child->size_ = order - 1;
 
 	//后移本节点的数据
 	for (int i = size_ - 1; i >= idx; i--) {
@@ -263,13 +262,13 @@ void BTreeNode::split_child(int idx, BTreeNode* child)
 	}
 
 	children_[idx + 1] = new_node;
-	keys_[idx] = child->keys_[M - 1];
-	data_[idx] = child->data_[M - 1];
+	keys_[idx] = child->keys_[order - 1];
+	data_[idx] = child->data_[order - 1];
 
 	size_++;
 }
 
-void BTreeNode::ldr()
+void btree::BTreeNode::ldr()
 {
 	if (leaf_)
 		for (int i = 0; i < size_; i++) {
@@ -286,7 +285,7 @@ void BTreeNode::ldr()
 	}
 }
 
-void BTreeNode::show_node() {
+void btree::BTreeNode::show_node() {
 	cout << "----------" << endl;
 	for (int i = 0; i < size_; i++)
 		cout << keys_[i] << " ";
@@ -300,12 +299,27 @@ void BTreeNode::show_node() {
 	cout << "----------" << endl;
 }
 
-Data* BTree::search(int key)
+void btree::BTreeNode::clear() {
+	if (!leaf_)
+		for (int i = 0; i <= size_; i++) {
+			children_[i]->clear();
+			delete children_[i];
+		}
+	for (int i = 0; i < size_; i++)
+		delete data_[i];
+}
+
+btree::BTree::~BTree() {
+	root_->clear();
+	delete root_;
+}
+
+Data* btree::BTree::search(int key)
 {
 	return root_ == nullptr ? nullptr : root_->search(key);
 }
 
-void BTree::insert(int key, Data* data)
+void btree::BTree::insert(int key, Data* data)
 {
 	if (root_ == nullptr) {
 		root_ = new BTreeNode(true);
@@ -314,7 +328,7 @@ void BTree::insert(int key, Data* data)
 		root_->size_ = 1;
 	}
 	else {
-		if (root_->size_ == M * 2 - 1) {
+		if (root_->size_ == order * 2 - 1) {
 			auto new_root = new BTreeNode(false);
 			new_root->children_[0] = root_;
 			new_root->split_child(0, root_);
@@ -329,12 +343,12 @@ void BTree::insert(int key, Data* data)
 	}
 }
 
-void BTree::ldr()
+void btree::BTree::ldr()
 {
 	root_->ldr();
 }
 
-void BTree::remove(int key)
+void btree::BTree::remove(int key)
 {
 	if (!root_) return;
 

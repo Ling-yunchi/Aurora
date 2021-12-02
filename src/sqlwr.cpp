@@ -19,7 +19,7 @@ void logger_test() {
 }
 
 void btree_test() {
-	BTree b_tree;
+	btree::BTree b_tree;
 	for (int i = 0; i < 100000; i++)
 		b_tree.insert(i, new Data(i));
 
@@ -31,7 +31,7 @@ void btree_test() {
 		b_tree.remove(key);
 	}
 
-	b_tree.ldr();
+	//b_tree.ldr();
 }
 
 class Page {
@@ -87,7 +87,7 @@ void test_serialize() {
 
 int main()
 {
-	test_serialize();
+	btree_test();
 	//string cmd;
 	//Engine engine;
 	//while (true) {

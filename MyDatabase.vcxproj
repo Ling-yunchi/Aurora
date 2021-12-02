@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\log\Logger.cpp" />
+    <ClCompile Include="src\storage\BPTree.cpp" />
     <ClCompile Include="src\storage\BTree.cpp" />
     <ClCompile Include="src\storage\Data.cpp" />
     <ClCompile Include="src\parser\Engine.cpp" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\log\Logger.h" />
+    <ClInclude Include="src\storage\BPTree.h" />
     <ClInclude Include="src\storage\BTree.h" />
     <ClInclude Include="src\storage\Data.h" />
     <ClInclude Include="src\parser\Engine.h" />
