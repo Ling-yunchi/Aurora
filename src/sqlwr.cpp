@@ -8,6 +8,7 @@
 #include "boost/archive/binary_oarchive.hpp"
 #include "boost/archive/binary_iarchive.hpp"
 #include "boost/serialization/vector.hpp"
+#include "storage/BPTree.h"
 #include "log/Logger.h"
 using namespace std;
 
@@ -32,6 +33,17 @@ void btree_test() {
 	}
 
 	//b_tree.ldr();
+}
+
+void bptree_test() {
+	bptree::BPTree tree;
+	tree.insert(5,new Data(5));
+	tree.insert(15,new Data(15));
+	tree.insert(25,new Data(25));
+	tree.insert(35,new Data(35));
+	tree.insert(45,new Data(45));
+
+	tree.display(tree.get_root());
 }
 
 class Page {
@@ -87,7 +99,7 @@ void test_serialize() {
 
 int main()
 {
-	btree_test();
+	bptree_test();
 	//string cmd;
 	//Engine engine;
 	//while (true) {
