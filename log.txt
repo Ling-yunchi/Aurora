@@ -1,239 +1,358 @@
-2021-12-05 09:32:19 [info] find value 6
-2021-12-05 09:32:19 [info] find value 50
-2021-12-05 09:32:19 [info] find value 99
->> node: 63, leaf:false
+2021-12-05 18:07:41 [info] find value 5
+5
+>>
+node: 63, leaf: false
 keys: 55 
 children: 22 62 
->> node: 22, leaf:false
+>>
+node: 22, leaf: false
 keys: 19 37 
 children: 8 21 35 
->> node: 8, leaf:false
+>>
+node: 8, leaf: false
 keys: 7 13 
 children: 3 7 12 
->> node: 3, leaf:false
+>>
+node: 3, leaf: false
 keys: 3 5 
 children: 1 2 4 
->> node: 1, leaf:true
+>>
+node: 1, leaf: true
 keys: 1 2 
-values: 1 2 prev: null ,next: 2
->> node: 2, leaf:true
+values: 1 2 
+prev: null ,next: 2
+>>
+node: 2, leaf: true
 keys: 3 4 
-values: 3 4 prev: 1 ,next: 4
->> node: 4, leaf:true
-keys: 5 5 6 
-values: 6 5 6 prev: 2 ,next: 5
->> node: 7, leaf:false
+values: 3 4 
+prev: 1 ,next: 4
+>>
+node: 4, leaf: true
+keys: 5 6 
+values: 5 6 
+prev: 2 ,next: 5
+>>
+node: 7, leaf: false
 keys: 9 11 
 children: 5 6 9 
->> node: 5, leaf:true
+>>
+node: 5, leaf: true
 keys: 7 8 
-values: 7 8 prev: 4 ,next: 6
->> node: 6, leaf:true
+values: 7 8 
+prev: 4 ,next: 6
+>>
+node: 6, leaf: true
 keys: 9 10 
-values: 9 10 prev: 5 ,next: 9
->> node: 9, leaf:true
+values: 9 10 
+prev: 5 ,next: 9
+>>
+node: 9, leaf: true
 keys: 11 12 
-values: 11 12 prev: 6 ,next: 10
->> node: 12, leaf:false
+values: 11 12 
+prev: 6 ,next: 10
+>>
+node: 12, leaf: false
 keys: 15 17 
 children: 10 11 13 
->> node: 10, leaf:true
+>>
+node: 10, leaf: true
 keys: 13 14 
-values: 13 14 prev: 9 ,next: 11
->> node: 11, leaf:true
+values: 13 14 
+prev: 9 ,next: 11
+>>
+node: 11, leaf: true
 keys: 15 16 
-values: 15 16 prev: 10 ,next: 13
->> node: 13, leaf:true
+values: 15 16 
+prev: 10 ,next: 13
+>>
+node: 13, leaf: true
 keys: 17 18 
-values: 17 18 prev: 11 ,next: 14
->> node: 21, leaf:false
+values: 17 18 
+prev: 11 ,next: 14
+>>
+node: 21, leaf: false
 keys: 25 31 
 children: 16 20 26 
->> node: 16, leaf:false
+>>
+node: 16, leaf: false
 keys: 21 23 
 children: 14 15 17 
->> node: 14, leaf:true
+>>
+node: 14, leaf: true
 keys: 19 20 
-values: 19 20 prev: 13 ,next: 15
->> node: 15, leaf:true
+values: 19 20 
+prev: 13 ,next: 15
+>>
+node: 15, leaf: true
 keys: 21 22 
-values: 21 22 prev: 14 ,next: 17
->> node: 17, leaf:true
+values: 21 22 
+prev: 14 ,next: 17
+>>
+node: 17, leaf: true
 keys: 23 24 
-values: 23 24 prev: 15 ,next: 18
->> node: 20, leaf:false
+values: 23 24 
+prev: 15 ,next: 18
+>>
+node: 20, leaf: false
 keys: 27 29 
 children: 18 19 23 
->> node: 18, leaf:true
+>>
+node: 18, leaf: true
 keys: 25 26 
-values: 25 26 prev: 17 ,next: 19
->> node: 19, leaf:true
+values: 25 26 
+prev: 17 ,next: 19
+>>
+node: 19, leaf: true
 keys: 27 28 
-values: 27 28 prev: 18 ,next: 23
->> node: 23, leaf:true
+values: 27 28 
+prev: 18 ,next: 23
+>>
+node: 23, leaf: true
 keys: 29 30 
-values: 29 30 prev: 19 ,next: 24
->> node: 26, leaf:false
+values: 29 30 
+prev: 19 ,next: 24
+>>
+node: 26, leaf: false
 keys: 33 35 
 children: 24 25 27 
->> node: 24, leaf:true
+>>
+node: 24, leaf: true
 keys: 31 32 
-values: 31 32 prev: 23 ,next: 25
->> node: 25, leaf:true
+values: 31 32 
+prev: 23 ,next: 25
+>>
+node: 25, leaf: true
 keys: 33 34 
-values: 33 34 prev: 24 ,next: 27
->> node: 27, leaf:true
+values: 33 34 
+prev: 24 ,next: 27
+>>
+node: 27, leaf: true
 keys: 35 36 
-values: 35 36 prev: 25 ,next: 28
->> node: 35, leaf:false
+values: 35 36 
+prev: 25 ,next: 28
+>>
+node: 35, leaf: false
 keys: 43 49 
 children: 30 34 39 
->> node: 30, leaf:false
+>>
+node: 30, leaf: false
 keys: 39 41 
 children: 28 29 31 
->> node: 28, leaf:true
+>>
+node: 28, leaf: true
 keys: 37 38 
-values: 37 38 prev: 27 ,next: 29
->> node: 29, leaf:true
+values: 37 38 
+prev: 27 ,next: 29
+>>
+node: 29, leaf: true
 keys: 39 40 
-values: 39 40 prev: 28 ,next: 31
->> node: 31, leaf:true
+values: 39 40 
+prev: 28 ,next: 31
+>>
+node: 31, leaf: true
 keys: 41 42 
-values: 41 42 prev: 29 ,next: 32
->> node: 34, leaf:false
+values: 41 42 
+prev: 29 ,next: 32
+>>
+node: 34, leaf: false
 keys: 45 47 
 children: 32 33 36 
->> node: 32, leaf:true
+>>
+node: 32, leaf: true
 keys: 43 44 
-values: 43 44 prev: 31 ,next: 33
->> node: 33, leaf:true
+values: 43 44 
+prev: 31 ,next: 33
+>>
+node: 33, leaf: true
 keys: 45 46 
-values: 45 46 prev: 32 ,next: 36
->> node: 36, leaf:true
+values: 45 46 
+prev: 32 ,next: 36
+>>
+node: 36, leaf: true
 keys: 47 48 
-values: 47 48 prev: 33 ,next: 37
->> node: 39, leaf:false
+values: 47 48 
+prev: 33 ,next: 37
+>>
+node: 39, leaf: false
 keys: 51 53 
 children: 37 38 40 
->> node: 37, leaf:true
+>>
+node: 37, leaf: true
 keys: 49 50 
-values: 49 50 prev: 36 ,next: 38
->> node: 38, leaf:true
+values: 49 50 
+prev: 36 ,next: 38
+>>
+node: 38, leaf: true
 keys: 51 52 
-values: 51 52 prev: 37 ,next: 40
->> node: 40, leaf:true
+values: 51 52 
+prev: 37 ,next: 40
+>>
+node: 40, leaf: true
 keys: 53 54 
-values: 53 54 prev: 38 ,next: 41
->> node: 62, leaf:false
+values: 53 54 
+prev: 38 ,next: 41
+>>
+node: 62, leaf: false
 keys: 73 91 
 children: 48 61 76 
->> node: 48, leaf:false
+>>
+node: 48, leaf: false
 keys: 61 67 
 children: 43 47 52 
->> node: 43, leaf:false
+>>
+node: 43, leaf: false
 keys: 57 59 
 children: 41 42 44 
->> node: 41, leaf:true
+>>
+node: 41, leaf: true
 keys: 55 56 
-values: 55 56 prev: 40 ,next: 42
->> node: 42, leaf:true
+values: 55 56 
+prev: 40 ,next: 42
+>>
+node: 42, leaf: true
 keys: 57 58 
-values: 57 58 prev: 41 ,next: 44
->> node: 44, leaf:true
+values: 57 58 
+prev: 41 ,next: 44
+>>
+node: 44, leaf: true
 keys: 59 60 
-values: 59 60 prev: 42 ,next: 45
->> node: 47, leaf:false
+values: 59 60 
+prev: 42 ,next: 45
+>>
+node: 47, leaf: false
 keys: 63 65 
 children: 45 46 49 
->> node: 45, leaf:true
+>>
+node: 45, leaf: true
 keys: 61 62 
-values: 61 62 prev: 44 ,next: 46
->> node: 46, leaf:true
+values: 61 62 
+prev: 44 ,next: 46
+>>
+node: 46, leaf: true
 keys: 63 64 
-values: 63 64 prev: 45 ,next: 49
->> node: 49, leaf:true
+values: 63 64 
+prev: 45 ,next: 49
+>>
+node: 49, leaf: true
 keys: 65 66 
-values: 65 66 prev: 46 ,next: 50
->> node: 52, leaf:false
+values: 65 66 
+prev: 46 ,next: 50
+>>
+node: 52, leaf: false
 keys: 69 71 
 children: 50 51 53 
->> node: 50, leaf:true
+>>
+node: 50, leaf: true
 keys: 67 68 
-values: 67 68 prev: 49 ,next: 51
->> node: 51, leaf:true
+values: 67 68 
+prev: 49 ,next: 51
+>>
+node: 51, leaf: true
 keys: 69 70 
-values: 69 70 prev: 50 ,next: 53
->> node: 53, leaf:true
+values: 69 70 
+prev: 50 ,next: 53
+>>
+node: 53, leaf: true
 keys: 71 72 
-values: 71 72 prev: 51 ,next: 54
->> node: 61, leaf:false
+values: 71 72 
+prev: 51 ,next: 54
+>>
+node: 61, leaf: false
 keys: 79 85 
 children: 56 60 67 
->> node: 56, leaf:false
+>>
+node: 56, leaf: false
 keys: 75 77 
 children: 54 55 57 
->> node: 54, leaf:true
+>>
+node: 54, leaf: true
 keys: 73 74 
-values: 73 74 prev: 53 ,next: 55
->> node: 55, leaf:true
+values: 73 74 
+prev: 53 ,next: 55
+>>
+node: 55, leaf: true
 keys: 75 76 
-values: 75 76 prev: 54 ,next: 57
->> node: 57, leaf:true
+values: 75 76 
+prev: 54 ,next: 57
+>>
+node: 57, leaf: true
 keys: 77 78 
-values: 77 78 prev: 55 ,next: 58
->> node: 60, leaf:false
+values: 77 78 
+prev: 55 ,next: 58
+>>
+node: 60, leaf: false
 keys: 81 83 
 children: 58 59 64 
->> node: 58, leaf:true
+>>
+node: 58, leaf: true
 keys: 79 80 
-values: 79 80 prev: 57 ,next: 59
->> node: 59, leaf:true
+values: 79 80 
+prev: 57 ,next: 59
+>>
+node: 59, leaf: true
 keys: 81 82 
-values: 81 82 prev: 58 ,next: 64
->> node: 64, leaf:true
+values: 81 82 
+prev: 58 ,next: 64
+>>
+node: 64, leaf: true
 keys: 83 84 
-values: 83 84 prev: 59 ,next6
-50
-99
-: 65
->> node: 67, leaf:false
+values: 83 84 
+prev: 59 ,next: 65
+>>
+node: 67, leaf: false
 keys: 87 89 
 children: 65 66 68 
->> node: 65, leaf:true
+>>
+node: 65, leaf: true
 keys: 85 86 
-values: 85 86 prev: 64 ,next: 66
->> node: 66, leaf:true
+values: 85 86 
+prev: 64 ,next: 66
+>>
+node: 66, leaf: true
 keys: 87 88 
-values: 87 88 prev: 65 ,next: 68
->> node: 68, leaf:true
+values: 87 88 
+prev: 65 ,next: 68
+>>
+node: 68, leaf: true
 keys: 89 90 
-values: 89 90 prev: 66 ,next: 69
->> node: 76, leaf:false
+values: 89 90 
+prev: 66 ,next: 69
+>>
+node: 76, leaf: false
 keys: 97 
 children: 71 75 
->> node: 71, leaf:false
+>>
+node: 71, leaf: false
 keys: 93 95 
 children: 69 70 72 
->> node: 69, leaf:true
+>>
+node: 69, leaf: true
 keys: 91 92 
-values: 91 92 prev: 68 ,next: 70
->> node: 70, leaf:true
+values: 91 92 
+prev: 68 ,next: 70
+>>
+node: 70, leaf: true
 keys: 93 94 
-values: 93 94 prev: 69 ,next: 72
->> node: 72, leaf:true
+values: 93 94 
+prev: 69 ,next: 72
+>>
+node: 72, leaf: true
 keys: 95 96 
-values: 95 96 prev: 70 ,next: 73
->> node: 75, leaf:false
+values: 95 96 
+prev: 70 ,next: 73
+>>
+node: 75, leaf: false
 keys: 99 
 children: 73 74 
->> node: 73, leaf:true
+>>
+node: 73, leaf: true
 keys: 97 98 
-values: 97 98 prev: 72 ,next: 74
->> node: 74, leaf:true
+values: 97 98 
+prev: 72 ,next: 74
+>>
+node: 74, leaf: true
 keys: 99 100 
-values: 99 100 prev: 73 ,next: null
-2021-12-05 09:35:21 [info] find value 6
-2021-12-05 09:35:21 [info] not find key: 50
-2021-12-05 09:36:51 [error] key 5 is already exist!
-2021-12-05 09:36:51 [info] find value 5
-2021-12-05 09:36:51 [info] not find key: 50
+values: 99 100 
+prev: 73 ,next: null
+2021-12-05 18:07:41 [info] bptree died
+--------------------

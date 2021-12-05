@@ -5,4 +5,3 @@ public:
 	int data_;
 	Data(int data) :data_(data) {}
 };
-

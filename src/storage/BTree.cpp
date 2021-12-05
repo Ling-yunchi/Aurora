@@ -354,7 +354,10 @@ void btree::BTree::ldr()
 
 void btree::BTree::remove(int key)
 {
-	if (!root_) return;
+	if (!root_) {
+		logger.error("can not remove from empty tree!");
+		return;
+	}
 
 	root_->remove(key);
 

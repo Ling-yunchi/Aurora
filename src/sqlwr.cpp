@@ -42,16 +42,23 @@ void bptree_test() {
 	//tree.insert(25,new Data(25));
 	//tree.insert(35,new Data(35));
 	//tree.insert(45,new Data(45));
-	for(int i = 1;i<=10;i++) {
+	for (int i = 1; i <= 100; i++) {
 		tree.insert(i, new Data(i));
 		//tree.display(tree.get_root());
 	}
-	tree.insert(5,new Data(6));
+	//tree.insert(5, new Data(6));
 
 	logger << to_string(tree.search(5)->data_) << "\n";
-	logger << to_string(tree.search(50)->data_) << "\n";
-	logger << to_string(tree.search(99)->data_) << "\n";
+	//logger << to_string(tree.search(50)->data_) << "\n";
+	//logger << to_string(tree.search(99)->data_) << "\n";
 
+	tree.display(tree.get_root());
+
+	for (int i = 1; i <= 100; i++) {
+		tree.remove(i);
+		//tree.display(tree.get_root());
+	}
+	logger << "--------------------\n";
 	tree.display(tree.get_root());
 }
 
@@ -72,9 +79,9 @@ public:
 		string out;
 		out += "{id:";
 		out += std::to_string(id_);
-		out+=", nodes:";
+		out += ", nodes:";
 		out += "[";
-		for (int i = 0; i < node_ids_.size();i++) {
+		for (int i = 0; i < node_ids_.size(); i++) {
 			if (i != 0) out += "," + std::to_string(node_ids_[i]);
 			else out += std::to_string(node_ids_[i]);
 		}
@@ -92,8 +99,8 @@ void test_serialize() {
 	vector<int> ids(5);
 	ids = { 2,3,4,5 };
 	page.set_node(ids);
-	ofstream out("./data.txt",ios::app);
-	out.seekp(0,ios::end);
+	ofstream out("./data.txt", ios::app);
+	out.seekp(0, ios::end);
 	cout << out.tellp();
 	boost::archive::binary_oarchive sout(out);
 	sout << page;

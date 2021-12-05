@@ -83,10 +83,111 @@ void bptree::BPTree::insert_internal(int key, BPTreeNode* cursor, BPTreeNode* ch
 }
 
 void bptree::BPTree::remove_internal(int key, BPTreeNode* cursor, BPTreeNode* child) {
-	if(cursor == root_) {
-		if(cursor->size_ == 1) {
-			
+	if (cursor == root_ && cursor->size_ == 1) {
+		if (cursor->children_[1] == child)
+			root_ = cursor->children_[0];
+		else if (cursor->children_[0] == child)
+			root_ = cursor->children_[1];
+		delete child;
+		delete cursor;
+		return;
+	}
+
+	int idx = 0;
+	while (idx < cursor->size_ && cursor->keys_[idx] != key) idx++;
+
+	for (int i = idx; i < cursor->size_; i++) {
+		cursor->keys_[i] = cursor->keys_[i + 1];
+		cursor->children_[i + 1] = cursor->children_[i + 2];
+	}
+	cursor->size_--;
+	delete child;
+
+	if (cursor->size_ >= ((max + 1) >> 1) - 1) return;
+	if (cursor == root_) return;
+
+	BPTreeNode* parent = find_parent(root_, cursor);
+	int l_s = -1, r_s = -1;
+	for (idx = 0; idx < parent->size_ + 1; idx++) {
+		if (parent->children_[idx] == cursor) {
+			l_s = idx - 1;
+			r_s = idx + 1;
+			break;
 		}
+	}
+
+	//向左右兄弟借节点
+	if (l_s >= 0) {
+		//有左兄弟
+		BPTreeNode* left_sibling = parent->children_[l_s];
+		if (left_sibling->size_ >= (max + 1) >> 1) {
+			for (int i = cursor->size_; i > 0; i--) {
+				cursor->keys_[i] = cursor->keys_[i - 1];
+				cursor->children_[i + 1] = cursor->children_[i];
+			}
+			cursor->children_[1] = cursor->children_[0];
+
+			cursor->keys_[0] = parent->keys_[l_s];
+			cursor->children_[0] = left_sibling->children_[left_sibling->size_];
+			cursor->size_++;
+
+			parent->keys_[l_s] = left_sibling->keys_[left_sibling->size_ - 1];
+			left_sibling->size_--;
+			return;
+		}
+	}
+	if (r_s <= parent->size_) {
+		//有右兄弟
+		BPTreeNode* right_sibling = parent->children_[r_s];
+		if (right_sibling->size_ >= (max + 1) >> 1) {
+			cursor->keys_[cursor->size_] = parent->keys_[idx];
+			parent->keys_[idx] = right_sibling->keys_[0];
+			cursor->children_[cursor->size_ + 1] = right_sibling->children_[0];
+			cursor->size_++;
+
+			for (int i = 1; i < right_sibling->size_; i++) {
+				right_sibling->keys_[i - 1] = right_sibling->keys_[i];
+				right_sibling->children_[i - 1] = right_sibling->children_[i];
+			}
+			right_sibling->children_[right_sibling->size_ - 1] = right_sibling->children_[right_sibling->size_];
+
+			right_sibling->size_--;
+			return;
+		}
+	}
+
+	//与左右兄弟合并
+	if (l_s >= 0) {
+		//将自身合并到左兄弟
+		BPTreeNode* left_sibling = parent->children_[l_s];
+		left_sibling->keys_[left_sibling->size_] = parent->keys_[l_s];
+
+		for (int i = left_sibling->size_ + 1, j = 0; j < cursor->size_; i++, j++) {
+			left_sibling->keys_[i] = cursor->keys_[j];
+			left_sibling->children_[i] = cursor->children_[j];
+		}
+		left_sibling->children_[left_sibling->size_ + cursor->size_ + 1] =
+			cursor->children_[cursor->size_];
+
+		left_sibling->size_ += cursor->size_ + 1;
+		cursor->size_ = 0;
+		remove_internal(parent->keys_[l_s], parent, cursor);
+	}
+	else if (cursor->children_[1]) {
+		//将右兄弟合并到自身
+		BPTreeNode* right_sibling = parent->children_[r_s];
+		cursor->keys_[cursor->size_] = parent->keys_[r_s - 1];
+
+		for (int i = cursor->size_ + 1, j = 0; j < right_sibling->size_; i++, j++) {
+			cursor->keys_[i] = right_sibling->keys_[j];
+			cursor->children_[i] = right_sibling->children_[j];
+		}
+		cursor->children_[cursor->size_ + right_sibling->size_ + 1] =
+			right_sibling->children_[right_sibling->size_];
+
+		cursor->size_ += right_sibling->size_ + 1;
+		right_sibling->size_ = 0;
+		remove_internal(parent->keys_[r_s - 1], parent, right_sibling);
 	}
 }
 
@@ -258,16 +359,141 @@ void bptree::BPTree::insert(int key, Data* data) {
 }
 
 void bptree::BPTree::remove(int key) {
-	if(!root_) {
+	if (!root_) {
 		logger.error("can not remove from empty tree!");
-	}else {
-		
+	}
+	else {
+		BPTreeNode* cursor = root_;
+		BPTreeNode* parent = nullptr;
+		int l_s = -1, r_s = -1;
+		while (!cursor->leaf_) {
+			for (int i = 0; i < cursor->size_; i++) {
+				parent = cursor;
+				l_s = i - 1;
+				r_s = i + 1;
+				if (key < cursor->keys_[i]) {
+					cursor = cursor->children_[i];
+					break;
+				}
+				if (i == cursor->size_ - 1) {
+					l_s = i;
+					r_s = i + 2;
+					cursor = cursor->children_[i + 1];
+					break;
+				}
+			}
+		}
+
+		bool found = false;
+		int idx;
+		for (idx = 0; idx < cursor->size_; idx++) {
+			if (cursor->keys_[idx] == key) {
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			logger.warn("remove key " + std::to_string(key) + " not found");
+			return;
+		}
+
+		delete cursor->data_[idx];
+		cursor->size_--;
+		for (int i = idx; i < cursor->size_; i++) {
+			cursor->keys_[i] = cursor->keys_[i + 1];
+			cursor->data_[i] = cursor->data_[i + 1];
+		}
+
+		//若删除的是叶子节点的第一个节点，则需要更新parent的key值
+		if (l_s >= 0 && parent)
+			parent->keys_[l_s] = cursor->keys_[0];
+
+		if (cursor == root_) {
+			if (cursor->size_ == 0) {
+				logger.info("bptree died");
+				delete root_;
+				root_ = nullptr;
+			}
+			return;
+		}
+
+		//不需要借节点
+		if (cursor->size_ >= (max + 1) >> 1) return;
+
+		//向左右兄弟借节点
+		if (cursor->children_[0]) {
+			//有左兄弟
+			BPTreeNode* left_sibling = cursor->children_[0];
+			if (left_sibling->size_ >= ((max + 1) >> 1) + 1) {
+				for (int i = cursor->size_; i > 0; i--) {
+					cursor->keys_[i] = cursor->keys_[i - 1];
+					cursor->data_[i] = cursor->data_[i - 1];
+				}
+				cursor->size_++;
+				cursor->keys_[0] = left_sibling->keys_[left_sibling->size_ - 1];
+				left_sibling->size_--;
+				parent->keys_[l_s] = cursor->keys_[0];
+				return;
+			}
+		}
+		if (cursor->children_[1]) {
+			//有右兄弟
+			BPTreeNode* right_sibling = cursor->children_[1];
+			if (right_sibling->size_ >= ((max + 1) >> 1) + 1) {
+				cursor->keys_[cursor->size_] = right_sibling->keys_[0];
+				cursor->data_[cursor->size_] = right_sibling->data_[0];
+				cursor->size_++;
+
+				for (int i = 0; i < right_sibling->size_; i++) {
+					right_sibling->keys_[i] = right_sibling->keys_[i + 1];
+					right_sibling->data_[i] = right_sibling->data_[i + 1];
+				}
+				right_sibling->size_--;
+				parent->keys_[r_s - 1] = right_sibling->keys_[0];
+				return;
+			}
+		}
+
+		//与左右兄弟合并
+		if (cursor->children_[0]) {
+			//将自身合并到左兄弟
+			BPTreeNode* left_sibling = cursor->children_[0];
+			for (int i = left_sibling->size_, j = 0; j < cursor->size_; i++, j++) {
+				left_sibling->keys_[i] = cursor->keys_[j];
+				left_sibling->data_[i] = cursor->data_[j];
+			}
+			left_sibling->size_ += cursor->size_;
+
+			//连接叶子节点链表
+			left_sibling->children_[1] = cursor->children_[1];
+			left_sibling->children_[1]->children_[0] = left_sibling;
+
+			remove_internal(parent->keys_[l_s], parent, cursor);
+			//delete cursor;
+		}
+		else if (cursor->children_[1]) {
+			//将右兄弟合并到自身
+			BPTreeNode* right_sibling = cursor->children_[1];
+			for (int i = cursor->size_, j = 0; j < right_sibling->size_; i++, j++) {
+				cursor->keys_[i] = right_sibling->keys_[j];
+				cursor->data_[i] = right_sibling->data_[j];
+			}
+			cursor->size_ += right_sibling->size_;
+
+			cursor->children_[1] = right_sibling->children_[1];
+			if (right_sibling->children_[1])
+				cursor->children_[1]->children_[0] = cursor;
+
+			remove_internal(parent->keys_[r_s - 1], parent, right_sibling);
+			//delete right_sibling;
+		}
 	}
 }
 
 void bptree::BPTree::display(BPTreeNode* cursor) {
 	if (cursor) {
-		logger << ">> node: " << std::to_string(cursor->id_) << ", leaf:" << (cursor->leaf_ ? "true" : "false") << "\n";
+		logger << ">>\nnode: " << std::to_string(cursor->id_) << ", leaf: " << (cursor->leaf_ ? "true" : "false") << "\n";
 		logger << "keys: ";
 		for (int i = 0; i < cursor->size_; i++) {
 			logger << std::to_string(cursor->keys_[i]) << " ";
@@ -284,7 +510,7 @@ void bptree::BPTree::display(BPTreeNode* cursor) {
 			for (int i = 0; i < cursor->size_; i++) {
 				logger << std::to_string(cursor->data_[i]->data_) << " ";
 			}
-			logger << "prev: " << (cursor->children_[0] ? std::to_string(cursor->children_[0]->id_) : "null") << " ,next: " << (cursor->children_[1] ? std::to_string(cursor->children_[1]->id_) : "null");
+			logger << "\nprev: " << (cursor->children_[0] ? std::to_string(cursor->children_[0]->id_) : "null") << " ,next: " << (cursor->children_[1] ? std::to_string(cursor->children_[1]->id_) : "null");
 		}
 		logger << "\n";
 		if (!cursor->leaf_) {

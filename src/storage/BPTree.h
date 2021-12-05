@@ -16,7 +16,7 @@ namespace bptree {
 		int size_ = 0;
 		int leaf_;
 	public:
-		BPTreeNode(int id,bool leaf);
+		BPTreeNode(int id, bool leaf);
 	};
 
 	class BPTree {
