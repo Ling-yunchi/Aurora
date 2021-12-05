@@ -37,11 +37,20 @@ void btree_test() {
 
 void bptree_test() {
 	bptree::BPTree tree;
-	tree.insert(5,new Data(5));
-	tree.insert(15,new Data(15));
-	tree.insert(25,new Data(25));
-	tree.insert(35,new Data(35));
-	tree.insert(45,new Data(45));
+	//tree.insert(5,new Data(5));
+	//tree.insert(15,new Data(15));
+	//tree.insert(25,new Data(25));
+	//tree.insert(35,new Data(35));
+	//tree.insert(45,new Data(45));
+	for(int i = 1;i<=10;i++) {
+		tree.insert(i, new Data(i));
+		//tree.display(tree.get_root());
+	}
+	tree.insert(5,new Data(6));
+
+	logger << to_string(tree.search(5)->data_) << "\n";
+	logger << to_string(tree.search(50)->data_) << "\n";
+	logger << to_string(tree.search(99)->data_) << "\n";
 
 	tree.display(tree.get_root());
 }
