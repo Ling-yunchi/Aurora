@@ -6,8 +6,8 @@
 
 constexpr int page_max_item = 10;
 
-template<typename T, int size>
-class page : public serializable<4 + size * page_max_item> {
+template<typename T, int TSize>
+class page : public serializable<4 + TSize * page_max_item> {
 	int id_;
 	bool dirty_;	//不用序列化，读出为false，修改后为true
 	int size_;
@@ -17,6 +17,6 @@ public:
 	page() {
 
 	}
-	void serialize(std::ostream& os) override;
-	void unserialize(std::istream& is) override;
+	char* serialize() override;
+	void unserialize(char* buffer) override;
 };

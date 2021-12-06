@@ -124,15 +124,33 @@ namespace test
 		//cout << p.to_string();
 	}
 
+	class inner_node :public serializable<4> {
+	public:
+		int id_;
+		inner_node() = default;
+		inner_node(int id) :id_(id) {}
+		char* serialize() override {
+			auto buf = new char[this->storage_size_];
+			auto int_buf = reinterpret_cast<int*>(buf);
+			*int_buf = id_;
+			return buf;
+		}
+		void unserialize(char* buf) {
+			auto int_buf = reinterpret_cast<int*>(buf);
+			id_ = *int_buf;
+		}
+	};
+
 	constexpr int node_max = 5;
-	class node : public serializable {
+	class node : public serializable<2 * sizeof(int) + 5 * 2 * sizeof(int)> {
 	public:
 		int id_;
 		vector<int> keys_;
-		vector<int> data_ids_;
+		vector<inner_node> nodes_;
 		int size_;
-		node() :serializable(2 * sizeof(int) + 5 * 2 * sizeof(int)) {
-
+		node() {
+			keys_.resize(node_max);
+			nodes_.resize(node_max);
 		}
 		void display() {
 			logger << "id: " << to_string(id_) << ", size: " << to_string(size_) << "\n";
@@ -140,49 +158,28 @@ namespace test
 				logger << keys_[i] << " ";
 			logger << "\n";
 			for (int i = 0; i < size_; i++)
-				logger << data_ids_[i] << " ";
+				logger << nodes_[i].id_ << " ";
 			logger << "\n";
 		}
-		//void serialize(ostream& os) override {
-		//	os << id_ << " " << size_ << " ";
-		//	for (int i = 0; i < size_; i++)
-		//		os << keys_[i] << " ";
-		//	for (int i = 0; i < size_; i++)
-		//		os << data_ids_[i] << " ";
-		//}
-		//void unserialize(istream& is) override {
-		//	is >> id_;
-		//	is >> size_;
-		//	keys_.resize(size_);
-		//	for (int i = 0; i < size_; i++)
-		//		is >> keys_[i];
-		//	data_ids_.resize(size_);
-		//	for (int i = 0; i < size_; i++)
-		//		is >> data_ids_[i];
-		//}
-		void serialize(ostream& os) override {
-			auto buffer = new char[storage_size_];
-			auto int_buffer = reinterpret_cast<int*>(buffer);
-			*int_buffer++ = id_;
-			*int_buffer++ = size_;
-			//for (int i = 0; i < node_max; i++)
-			//	if (i < size_) *int_buffer++ = keys_[i];
-			//	else *int_buffer++ = 0;
-			//for (int i = 0; i < node_max; i++)
-			//	if (i < size_) *int_buffer++ = data_ids_[i];
-			//	else *int_buffer++ = 0;
-			serialize_vector(keys_, node_max, int_buffer);
-			serialize_vector(data_ids_, node_max, int_buffer);
-			os.write(buffer, storage_size_);
+		char* serialize() override {
+			auto buf = new char[this->storage_size_];
+			auto temp_buf = buf;
+			*reinterpret_cast<int*>(temp_buf) = id_;
+			temp_buf += 4;
+			*reinterpret_cast<int*>(temp_buf) = size_;
+			temp_buf += 4;
+			serialize_vector(keys_, size_, temp_buf);
+			serialize_vector(nodes_, size_, temp_buf);
+			return buf;
 		}
-		void unserialize(istream& is) override {
-			auto buffer = new char[storage_size_];
-			is.read(buffer, storage_size_);
-			auto int_buffer = reinterpret_cast<int*>(buffer);
-			id_ = *int_buffer++;
-			size_ = *int_buffer++;
-			unserialize_vector(keys_, node_max, int_buffer);
-			unserialize_vector(data_ids_, node_max, int_buffer);
+		void unserialize(char* buf) override {
+			auto temp_buf = buf;
+			id_ = *reinterpret_cast<int*>(temp_buf);
+			temp_buf += 4;
+			size_ = *reinterpret_cast<int*>(temp_buf);
+			temp_buf += 4;
+			unserialize_vector(keys_, size_, temp_buf);
+			unserialize_vector(nodes_, size_, temp_buf);
 		}
 	};
 
@@ -194,23 +191,25 @@ namespace test
 			n.id_ = i;
 			n.size_ = 3;
 			n.keys_ = { i,i + 1,i + 2 };
-			n.data_ids_ = { i,i + 1,i + 2 };
-			n.serialize(file);
+			n.nodes_ = { inner_node(i + 1),inner_node(i + 2),inner_node(i + 3) };
+			file.write(n.serialize(), n.get_storage_size());
 		}
 
 		file << flush;
 
-		file.seekg(0, ios::beg);
 		node n;
-		n.unserialize(file);
+		file.seekg(n.get_storage_size(), ios::beg);
+		auto buf = new char[n.get_storage_size()];
+		file.read(buf, n.get_storage_size());
+		n.unserialize(buf);
 		n.display();
 	}
 
 	void test_page() {
-		page<int> a;
+
 	}
 
 	inline void test_entry() {
-		test_page();
+		test_my_serialize();
 	}
 }
