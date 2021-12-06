@@ -250,6 +250,7 @@ void bptree::BPTree::insert(int key, Data* data) {
 		root_ = new BPTreeNode(increment_id_++, true);
 		root_->keys_[0] = key;
 		root_->data_[0] = data;
+		logger.info("insert key " + std::to_string(key));
 		root_->children_[0] = root_->children_[1] = nullptr;
 		root_->size_++;
 	}
@@ -276,7 +277,6 @@ void bptree::BPTree::insert(int key, Data* data) {
 			int idx = 0;
 			while (key > cursor->keys_[idx] && idx < cursor->size_) idx++;
 			if (idx != cursor->size_ && cursor->keys_[idx] == key) {
-				//TODO 重构重复代码
 				//已存在相同关键字
 				logger.error("key " + std::to_string(key) + " is already exist!");
 			}
@@ -288,6 +288,7 @@ void bptree::BPTree::insert(int key, Data* data) {
 
 				cursor->keys_[idx] = key;
 				cursor->data_[idx] = data;
+				logger.info("insert key " + std::to_string(key));
 				cursor->size_++;
 			}
 		}
@@ -317,6 +318,7 @@ void bptree::BPTree::insert(int key, Data* data) {
 				//插入新记录
 				virtual_key[idx] = key;
 				virtual_data[idx] = data;
+				logger.info("insert key " + std::to_string(key));
 
 				//创建右兄弟叶子节点
 				auto* new_leaf = new BPTreeNode(increment_id_++, true);
@@ -358,7 +360,7 @@ void bptree::BPTree::insert(int key, Data* data) {
 	}
 }
 
-void bptree::BPTree::remove(int key) {
+void bptree::BPTree::remove(const int key) {
 	if (!root_) {
 		logger.error("can not remove from empty tree!");
 	}
@@ -398,12 +400,14 @@ void bptree::BPTree::remove(int key) {
 			return;
 		}
 
+		logger.info("remove key " + std::to_string(key));
 		delete cursor->data_[idx];
 		cursor->size_--;
 		for (int i = idx; i < cursor->size_; i++) {
 			cursor->keys_[i] = cursor->keys_[i + 1];
 			cursor->data_[i] = cursor->data_[i + 1];
 		}
+
 
 		//若删除的是叶子节点的第一个节点，则需要更新parent的key值
 		if (l_s >= 0 && parent)
@@ -422,7 +426,7 @@ void bptree::BPTree::remove(int key) {
 		if (cursor->size_ >= (max + 1) >> 1) return;
 
 		//向左右兄弟借节点
-		if (cursor->children_[0]) {
+		if (l_s >= 0) {
 			//有左兄弟
 			BPTreeNode* left_sibling = cursor->children_[0];
 			if (left_sibling->size_ >= ((max + 1) >> 1) + 1) {
@@ -437,7 +441,7 @@ void bptree::BPTree::remove(int key) {
 				return;
 			}
 		}
-		if (cursor->children_[1]) {
+		if (r_s < parent->size_) {
 			//有右兄弟
 			BPTreeNode* right_sibling = cursor->children_[1];
 			if (right_sibling->size_ >= ((max + 1) >> 1) + 1) {
@@ -456,7 +460,7 @@ void bptree::BPTree::remove(int key) {
 		}
 
 		//与左右兄弟合并
-		if (cursor->children_[0]) {
+		if (l_s >= 0) {
 			//将自身合并到左兄弟
 			BPTreeNode* left_sibling = cursor->children_[0];
 			for (int i = left_sibling->size_, j = 0; j < cursor->size_; i++, j++) {
@@ -467,12 +471,13 @@ void bptree::BPTree::remove(int key) {
 
 			//连接叶子节点链表
 			left_sibling->children_[1] = cursor->children_[1];
-			left_sibling->children_[1]->children_[0] = left_sibling;
+			if (left_sibling->children_[1])
+				left_sibling->children_[1]->children_[0] = left_sibling;
 
 			remove_internal(parent->keys_[l_s], parent, cursor);
 			//delete cursor;
 		}
-		else if (cursor->children_[1]) {
+		else if (r_s < parent->size_) {
 			//将右兄弟合并到自身
 			BPTreeNode* right_sibling = cursor->children_[1];
 			for (int i = cursor->size_, j = 0; j < right_sibling->size_; i++, j++) {

@@ -36,6 +36,9 @@
     <ClCompile Include="src\storage\BPTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\storage\Page.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\parser\LexicalAnalysis.h">
@@ -60,6 +63,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\storage\BPTree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\test.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

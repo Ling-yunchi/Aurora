@@ -150,6 +150,7 @@
     <ClCompile Include="src\parser\Engine.cpp" />
     <ClCompile Include="src\parser\LexicalAnalysis.cpp" />
     <ClCompile Include="src\sqlwr.cpp" />
+    <ClCompile Include="src\storage\Page.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\log\Logger.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="src\parser\LexicalAnalysis.h" />
     <ClInclude Include="src\storage\Page.h" />
     <ClInclude Include="src\storage\serializable.h" />
+    <ClInclude Include="src\test\test.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="log.txt" />
