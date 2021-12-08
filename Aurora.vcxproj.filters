@@ -45,6 +45,9 @@
     <ClCompile Include="Table.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\storage\Table.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\parser\LexicalAnalysis.h">
@@ -87,6 +90,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Table.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\storage\Table.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

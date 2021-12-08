@@ -153,6 +153,7 @@
     <ClCompile Include="src\parser\Engine.cpp" />
     <ClCompile Include="src\parser\LexicalAnalysis.cpp" />
     <ClCompile Include="src\aurora.cpp" />
+    <ClCompile Include="src\storage\Table.cpp" />
     <ClCompile Include="Table.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +168,7 @@
     <ClInclude Include="src\parser\LexicalAnalysis.h" />
     <ClInclude Include="src\storage\Page.hpp" />
     <ClInclude Include="src\storage\serializable.h" />
+    <ClInclude Include="src\storage\Table.h" />
     <ClInclude Include="src\test\test.hpp" />
     <ClInclude Include="src\storage\TreeCache.hpp" />
     <ClInclude Include="Table.h" />
