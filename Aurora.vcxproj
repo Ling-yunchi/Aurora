@@ -22,8 +22,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{88d4303a-064b-4716-a988-77ad365d030e}</ProjectGuid>
-    <RootNamespace>MyDatabase</RootNamespace>
+    <RootNamespace>Aurora</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Aurora</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -151,7 +152,7 @@
     <ClCompile Include="src\storage\Data.cpp" />
     <ClCompile Include="src\parser\Engine.cpp" />
     <ClCompile Include="src\parser\LexicalAnalysis.cpp" />
-    <ClCompile Include="src\sqlwr.cpp" />
+    <ClCompile Include="src\aurora.cpp" />
     <ClCompile Include="Table.cpp" />
   </ItemGroup>
   <ItemGroup>

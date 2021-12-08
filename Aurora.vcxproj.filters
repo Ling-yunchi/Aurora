@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\sqlwr.cpp">
+    <ClCompile Include="src\aurora.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\parser\Engine.cpp">
