@@ -154,7 +154,6 @@
     <ClCompile Include="src\parser\LexicalAnalysis.cpp" />
     <ClCompile Include="src\aurora.cpp" />
     <ClCompile Include="src\storage\Table.cpp" />
-    <ClCompile Include="Table.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\storage\SBPTree.h" />
@@ -171,10 +170,10 @@
     <ClInclude Include="src\storage\Table.h" />
     <ClInclude Include="src\test\test.hpp" />
     <ClInclude Include="src\storage\TreeCache.hpp" />
-    <ClInclude Include="Table.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="log.txt" />
+    <Text Include="node.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

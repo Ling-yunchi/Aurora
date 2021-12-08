@@ -42,9 +42,6 @@
     <ClCompile Include="src\storage\SBPTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Table.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\storage\Table.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -89,15 +86,13 @@
     <ClInclude Include="src\storage\SBPTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Table.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\storage\Table.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="log.txt" />
+    <Text Include="node.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data.txt" />
