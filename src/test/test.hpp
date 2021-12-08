@@ -1,15 +1,16 @@
 #pragma once
-#include <boost/archive/binary_oarchive.hpp>
-#include "../storage/BTree.h"
-#include "../parser/Engine.h"
-#include "boost/serialization/access.hpp"
-#include "boost/archive/binary_oarchive.hpp"
-#include "boost/archive/binary_iarchive.hpp"
-#include "boost/serialization/vector.hpp"
-#include "../storage/BPTree.h"
+//#include <boost/archive/binary_oarchive.hpp>
 #include "../log/Logger.h"
-#include "../storage/serializable.h"
+#include "../parser/Engine.h"
+#include "../storage/BPTree.h"
+#include "../storage/BTree.h"
 #include "../storage/Page.h"
+#include "../storage/serializable.h"
+//#include "boost/archive/binary_iarchive.hpp"
+//#include "boost/archive/binary_oarchive.hpp"
+//#include "boost/serialization/access.hpp"
+//#include "boost/serialization/vector.hpp"
+#include "./storage/Cache.h"
 
 using namespace std;
 
@@ -74,7 +75,7 @@ namespace test
 	}
 
 	class Page {
-		friend class boost::serialization::access;
+		//friend class boost::serialization::access;
 
 		template<class Archive>
 		void serialize(Archive& ar, const unsigned int version)
@@ -105,23 +106,23 @@ namespace test
 	};
 
 	void test_boost_serialize() {
-		Page page;
-		page.set_id(2);
-		std::vector<int> ids(5);
-		ids = { 2,3,4,5 };
-		page.set_node(ids);
-		std::ofstream out("./data.txt", std::ios::app);
-		out.seekp(0, ios::end);
-		cout << out.tellp();
-		boost::archive::binary_oarchive sout(out);
-		sout << page;
-		//ifstream fi("./data.txt");
-		//fi.seekg(69);
-		//cout << fi.tellg() << endl;
-		//boost::archive::binary_iarchive sin(fi);
-		//Page p;
-		//sin >> p;
-		//cout << p.to_string();
+		//Page page;
+		//page.set_id(2);
+		//std::vector<int> ids(5);
+		//ids = { 2,3,4,5 };
+		//page.set_node(ids);
+		//std::ofstream out("./data.txt", std::ios::app);
+		//out.seekp(0, ios::end);
+		//cout << out.tellp();
+		//boost::archive::binary_oarchive sout(out);
+		//sout << page;
+		////ifstream fi("./data.txt");
+		////fi.seekg(69);
+		////cout << fi.tellg() << endl;
+		////boost::archive::binary_iarchive sin(fi);
+		////Page p;
+		////sin >> p;
+		////cout << p.to_string();
 	}
 
 	class inner_node :public serializable<4> {
@@ -131,13 +132,16 @@ namespace test
 		inner_node(int id) :id_(id) {}
 		char* serialize() override {
 			auto buf = new char[this->storage_size_];
-			auto int_buf = reinterpret_cast<int*>(buf);
-			*int_buf = id_;
+			auto tmp_buf = buf;
+			//auto int_buf = reinterpret_cast<int*>(buf);
+			//*int_buf = id_;
+			serialize_int(id_, tmp_buf);
 			return buf;
 		}
 		void unserialize(char* buf) {
-			auto int_buf = reinterpret_cast<int*>(buf);
-			id_ = *int_buf;
+			unserialize_int(id_, buf);
+			//auto int_buf = reinterpret_cast<int*>(buf);
+			//id_ = *int_buf;
 		}
 	};
 
@@ -192,7 +196,9 @@ namespace test
 			n.size_ = 3;
 			n.keys_ = { i,i + 1,i + 2 };
 			n.nodes_ = { inner_node(i + 1),inner_node(i + 2),inner_node(i + 3) };
-			file.write(n.serialize(), n.get_storage_size());
+			auto buf = n.serialize();
+			file.write(buf, n.get_storage_size());
+			delete[] buf;
 		}
 
 		file << flush;
@@ -202,14 +208,30 @@ namespace test
 		auto buf = new char[n.get_storage_size()];
 		file.read(buf, n.get_storage_size());
 		n.unserialize(buf);
+		delete[] buf;
 		n.display();
 	}
 
-	void test_page() {
+	void test_file() {
+		fstream f("./qwq.txt", ios::in | ios::out | ios::binary);
+		//Ô¤·ÖÅä¿Õ¼ä
+		f.seekp(1024 * 1024 * 10);
+		f.write("end", 3);
+	}
 
+	void test_cache() {
+		Cache<inner_node, 4> node_cache(10, "node.txt");
+		for (int i = 0; i < 10000; i++) {
+			node_cache.insert_item(i, inner_node(i));
+		}
+
+		logger << node_cache.get_item(10).id_ << lg::endl;
+		logger << node_cache.get_item(350).id_ << lg::endl;
+		logger << node_cache.get_item(999).id_ << lg::endl;
+		logger << node_cache.get_item(9999).id_ << lg::endl;
 	}
 
 	inline void test_entry() {
-		test_my_serialize();
+		test_cache();
 	}
 }

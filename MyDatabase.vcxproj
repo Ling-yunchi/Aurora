@@ -152,6 +152,7 @@
     <ClCompile Include="src\parser\LexicalAnalysis.cpp" />
     <ClCompile Include="src\sqlwr.cpp" />
     <ClCompile Include="src\storage\Page.cpp" />
+    <ClCompile Include="src\storage\TreeCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\storage\Cache.h" />
@@ -164,12 +165,14 @@
     <ClInclude Include="src\storage\Page.h" />
     <ClInclude Include="src\storage\serializable.h" />
     <ClInclude Include="src\test\test.hpp" />
+    <ClInclude Include="src\storage\TreeCache.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="log.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="data.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

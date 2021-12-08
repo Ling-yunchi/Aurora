@@ -2,13 +2,23 @@
 
 template<int storage_size>
 class serializable {
+protected:
+	int storage_size_ = storage_size;
 public:
 	virtual ~serializable() = default;
 	int get_storage_size() const { return storage_size_; }
 	virtual char* serialize() = 0;
 	virtual void unserialize(char* buf) = 0;
-protected:
-	int storage_size_ = storage_size;
+
+	static void serialize_int(const int& i, char*& buf) {
+		*reinterpret_cast<int*>(buf) = i;
+		buf += 4;
+	}
+
+	static void unserialize_int(int& i, char*& buf) {
+		i = *reinterpret_cast<int*>(buf);
+		buf += 4;
+	}
 
 	static void serialize_vector(std::vector<int>& data, int size, char*& buffer) {
 		for (int i = 0; i < size; i++) {
@@ -31,6 +41,7 @@ protected:
 			auto tmp = data[i].serialize();
 			for (int i = 0; i < data_size; i++)
 				*buffer++ = tmp[i];
+			delete tmp;
 		}
 	}
 

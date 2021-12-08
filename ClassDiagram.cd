@@ -1,38 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="page">
-    <Position X="0.5" Y="0.5" Width="2.25" />
+  <Class Name="page&lt;T, TSize&gt;">
+    <Position X="0.5" Y="1.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAEAAQEAgAYABAAAAAAAAAAAAARAAAAgA=</HashCode>
       <FileName>src\storage\Page.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="serializable_impl">
-    <Position X="4.25" Y="0.5" Width="1.5" />
+  <Class Name="btree::BTreeNode" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>src\storage\serializable_impl.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BTreeNode">
-    <Position X="6.25" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIAAEMIAAAAABAQEAAAAAADAAAAIAAABADkBAABAAAA=</HashCode>
+      <HashCode>AMAAEMIAAAAABAQEAAAAAADAAAAIAAABADkBAABAAAA=</HashCode>
       <FileName>src\storage\BTree.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BTree">
-    <Position X="4.25" Y="2.25" Width="1.5" />
+  <Class Name="btree::BTree" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABAAAAEAAAAAAAAAAQAABAAACAAAABAAAA=</HashCode>
       <FileName>src\storage\BTree.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Data">
-    <Position X="2" Y="2.5" Width="1.5" />
+  <Class Name="Data" Collapsed="true">
+    <Position X="3.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>src\storage\Data.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="serializable&lt;storage_size&gt;" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAIAAABAAQAAAAAAIgQAEAAAg=</HashCode>
+      <FileName>src\storage\serializable.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Microsoft YaHei UI" Size="9" />
