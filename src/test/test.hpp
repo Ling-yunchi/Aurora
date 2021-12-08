@@ -4,7 +4,7 @@
 #include "../parser/Engine.h"
 #include "../storage/BPTree.h"
 #include "../storage/BTree.h"
-#include "../storage/Page.h"
+#include "../storage/Page.hpp"
 #include "../storage/serializable.h"
 #include "random"
 #include "chrono"
@@ -12,7 +12,7 @@
 //#include "boost/archive/binary_oarchive.hpp"
 //#include "boost/serialization/access.hpp"
 //#include "boost/serialization/vector.hpp"
-#include "./storage/Cache.h"
+#include "./storage/Cache.hpp"
 
 using namespace std;
 

@@ -36,13 +36,13 @@
     <ClCompile Include="src\storage\BPTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\storage\Page.cpp">
+    <ClCompile Include="src\storage\SBTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\storage\Cache.cpp">
+    <ClCompile Include="src\storage\SBPTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\storage\TreeCache.cpp">
+    <ClCompile Include="Table.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +62,7 @@
     <ClInclude Include="src\log\Logger.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\storage\Page.h">
+    <ClInclude Include="src\storage\Page.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\storage\serializable.h">
@@ -74,10 +74,19 @@
     <ClInclude Include="src\test\test.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\storage\Cache.h">
+    <ClInclude Include="src\storage\Cache.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\storage\TreeCache.h">
+    <ClInclude Include="src\storage\TreeCache.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\storage\SBTree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\storage\SBPTree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

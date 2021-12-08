@@ -1,7 +1,7 @@
 #pragma once
 #include <functional>
 
-#include "Page.h"
+#include "Page.hpp"
 #include "../log/Logger.h"
 #include <map>
 #include <list>
@@ -13,6 +13,7 @@ constexpr int default_pre_allocate_file_size = 1000;
 template<typename T, int TSize>
 class Cache
 {
+protected:
 	int max_page_num_;
 
 	std::list<int> page_keys_;
@@ -27,7 +28,7 @@ public:
 	T& get_item(int item_id);
 	void insert_item(int item_id, const T item);
 	void flush();
-private:
+protected:
 	void read_page_from_disk(int page_id);
 	void write_page_to_disk(page<T, TSize>& page);
 	void obsolescence();
