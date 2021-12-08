@@ -6,6 +6,8 @@
 #include "../storage/BTree.h"
 #include "../storage/Page.h"
 #include "../storage/serializable.h"
+#include "random"
+#include "chrono"
 //#include "boost/archive/binary_iarchive.hpp"
 //#include "boost/archive/binary_oarchive.hpp"
 //#include "boost/serialization/access.hpp"
@@ -221,17 +223,34 @@ namespace test
 
 	void test_cache() {
 		Cache<inner_node, 4> node_cache(10, "node.txt");
-		for (int i = 0; i < 10000; i++) {
-			node_cache.insert_item(i, inner_node(i));
+		//for (int i = 0; i < 10000; i++) {
+		//	node_cache.insert_item(i, inner_node(i));
+		//}
+
+		//logger << node_cache.get_item(10).id_ << lg::endl;
+		//logger << node_cache.get_item(350).id_ << lg::endl;
+		//logger << node_cache.get_item(999).id_ << lg::endl;
+		//logger << node_cache.get_item(9999).id_ << lg::endl;
+
+		default_random_engine e;
+		uniform_int<int> rand_int(0, 9999);
+
+		for (int i = 0; i < 1000; i++) {
+			int key = rand_int(e);
+			logger << "get item " << key << lg::endl;
+			logger << node_cache.get_item(key).id_ << lg::endl;
 		}
 
-		logger << node_cache.get_item(10).id_ << lg::endl;
-		logger << node_cache.get_item(350).id_ << lg::endl;
-		logger << node_cache.get_item(999).id_ << lg::endl;
-		logger << node_cache.get_item(9999).id_ << lg::endl;
 	}
 
 	inline void test_entry() {
+		logger << logger.get_now_time() << " [test] ----------start----------" << lg::endl;
+		auto start = chrono::system_clock::now();
 		test_cache();
+		auto end = chrono::system_clock::now();
+		auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+		auto cost = double(duration.count()) * chrono::microseconds::period::num / chrono::microseconds::period::den;
+		logger << logger.get_now_time() << " [test] test finished at " + to_string(cost) + " seconds" << lg::endl;
+		logger << logger.get_now_time() << " [test] ----------end----------" << lg::endl;
 	}
 }

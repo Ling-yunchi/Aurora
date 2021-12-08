@@ -144,7 +144,7 @@ void Cache<T, TSize>::read_page_from_disk(int page_id) {
 
 	page_keys_.emplace_front(page_id);
 	pages_.insert(std::make_pair(page_id, tmp));
-	logger.info("add page " + std::to_string(page_id) + " to cache");
+	logger.info("add page " + std::to_string(page_id) + " from disk to cache");
 
 	//超过最大缓存数，淘汰
 	if (pages_.size() > max_page_num_)
@@ -156,7 +156,7 @@ void Cache<T, TSize>::write_page_to_disk(page<T, TSize>& page) {
 	if (page.get_id() > disk_page_size_)
 		disk_page_size_++;
 
-	logger.info("write page " + std::to_string(page.get_id()));
+	logger.info("write page " + std::to_string(page.get_id()) + " to disk");
 
 	auto buf = page.serialize();
 	disk.seekp(page_id_to_disk_idx(page.get_id()));
