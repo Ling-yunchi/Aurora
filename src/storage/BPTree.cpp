@@ -5,12 +5,12 @@
 bptree::BPTreeNode::BPTreeNode(int id, bool leaf) :id_(id), leaf_(leaf)
 {
 	if (!leaf_) {
-		keys_.resize(max);
-		children_.resize(max + 1);
+		keys_.resize(max_node_num);
+		children_.resize(max_node_num + 1);
 	}
 	else {
-		keys_.resize(max);
-		data_.resize(max);
+		keys_.resize(max_node_num);
+		data_.resize(max_node_num);
 		children_.resize(2);	//此处保存prev与next
 	}
 }
@@ -18,7 +18,7 @@ bptree::BPTreeNode::BPTreeNode(int id, bool leaf) :id_(id), leaf_(leaf)
 //实现b+tree插入内部操作
 //在parent中找到位置并插入child
 void bptree::BPTree::insert_internal(int key, BPTreeNode* cursor, BPTreeNode* child) {
-	if (cursor->size_ < max) {
+	if (cursor->size_ < max_node_num) {
 		int idx = 0;
 		while (idx < cursor->size_ && key > cursor->keys_[idx]) idx++;
 
@@ -34,19 +34,19 @@ void bptree::BPTree::insert_internal(int key, BPTreeNode* cursor, BPTreeNode* ch
 	}
 	else {
 		//分裂节点
-		int virtual_key[max + 1];
-		BPTreeNode* virtual_children[max + 2];
+		int virtual_key[max_node_num + 1];
+		BPTreeNode* virtual_children[max_node_num + 2];
 
-		for (int i = 0; i < max; i++) {
+		for (int i = 0; i < max_node_num; i++) {
 			virtual_key[i] = cursor->keys_[i];
 			virtual_children[i] = cursor->children_[i];
 		}
-		virtual_children[max] = cursor->children_[max];
+		virtual_children[max_node_num] = cursor->children_[max_node_num];
 
 		int idx = 0;
-		while (idx < max && key > virtual_key[idx]) idx++;
+		while (idx < max_node_num && key > virtual_key[idx]) idx++;
 
-		for (int i = max; i > idx; i--) {
+		for (int i = max_node_num; i > idx; i--) {
 			virtual_key[i] = virtual_key[i - 1];
 			virtual_children[i + 1] = virtual_children[i];
 		}
@@ -55,14 +55,14 @@ void bptree::BPTree::insert_internal(int key, BPTreeNode* cursor, BPTreeNode* ch
 
 		auto new_internal = new BPTreeNode(increment_id_++, false);
 
-		cursor->size_ = (max + 1) >> 1;
-		new_internal->size_ = max - cursor->size_;
+		cursor->size_ = (max_node_num + 1) >> 1;
+		new_internal->size_ = max_node_num - cursor->size_;
 
 		for (int i = 0, j = cursor->size_ + 1; i < new_internal->size_; i++, j++) {
 			new_internal->keys_[i] = virtual_key[j];
 			new_internal->children_[i] = virtual_children[j];
 		}
-		new_internal->children_[new_internal->size_] = virtual_children[max + 1];
+		new_internal->children_[new_internal->size_] = virtual_children[max_node_num + 1];
 
 		//若cursor为根节点
 		if (cursor == root_) {
@@ -103,7 +103,7 @@ void bptree::BPTree::remove_internal(int key, BPTreeNode* cursor, BPTreeNode* ch
 	cursor->size_--;
 	delete child;
 
-	if (cursor->size_ >= ((max + 1) >> 1) - 1) return;
+	if (cursor->size_ >= ((max_node_num + 1) >> 1) - 1) return;
 	if (cursor == root_) return;
 
 	BPTreeNode* parent = find_parent(root_, cursor);
@@ -120,7 +120,7 @@ void bptree::BPTree::remove_internal(int key, BPTreeNode* cursor, BPTreeNode* ch
 	if (l_s >= 0) {
 		//有左兄弟
 		BPTreeNode* left_sibling = parent->children_[l_s];
-		if (left_sibling->size_ >= (max + 1) >> 1) {
+		if (left_sibling->size_ >= (max_node_num + 1) >> 1) {
 			for (int i = cursor->size_; i > 0; i--) {
 				cursor->keys_[i] = cursor->keys_[i - 1];
 				cursor->children_[i + 1] = cursor->children_[i];
@@ -139,7 +139,7 @@ void bptree::BPTree::remove_internal(int key, BPTreeNode* cursor, BPTreeNode* ch
 	if (r_s <= parent->size_) {
 		//有右兄弟
 		BPTreeNode* right_sibling = parent->children_[r_s];
-		if (right_sibling->size_ >= (max + 1) >> 1) {
+		if (right_sibling->size_ >= (max_node_num + 1) >> 1) {
 			cursor->keys_[cursor->size_] = parent->keys_[idx];
 			parent->keys_[idx] = right_sibling->keys_[0];
 			cursor->children_[cursor->size_ + 1] = right_sibling->children_[0];
@@ -273,7 +273,7 @@ void bptree::BPTree::insert(int key, Data* data) {
 			}
 		}
 
-		if (cursor->size_ < max) {
+		if (cursor->size_ < max_node_num) {
 			int idx = 0;
 			while (key > cursor->keys_[idx] && idx < cursor->size_) idx++;
 			if (idx != cursor->size_ && cursor->keys_[idx] == key) {
@@ -295,23 +295,23 @@ void bptree::BPTree::insert(int key, Data* data) {
 		else {
 			int idx = 0;
 			//找到插入位置
-			while (idx < max && key > cursor->keys_[idx]) idx++;
+			while (idx < max_node_num && key > cursor->keys_[idx]) idx++;
 			if (idx != cursor->size_ && cursor->keys_[idx] == key) {
 				//已存在相同关键字
 				logger.error("key " + std::to_string(key) + " is already exist!");
 			}
 			else {
 				//创建一个虚拟节点插入新节点
-				int virtual_key[max + 1];
-				Data* virtual_data[max + 1];
+				int virtual_key[max_node_num + 1];
+				Data* virtual_data[max_node_num + 1];
 
-				for (int i = 0; i < max; i++) {
+				for (int i = 0; i < max_node_num; i++) {
 					virtual_key[i] = cursor->keys_[i];
 					virtual_data[i] = cursor->data_[i];
 				}
 
 				//后移记录
-				for (int i = max; i > idx; i--) {
+				for (int i = max_node_num; i > idx; i--) {
 					virtual_key[i] = virtual_key[i - 1];
 					virtual_data[i] = virtual_data[i - 1];
 				}
@@ -323,8 +323,8 @@ void bptree::BPTree::insert(int key, Data* data) {
 				//创建右兄弟叶子节点
 				auto* new_leaf = new BPTreeNode(increment_id_++, true);
 
-				cursor->size_ = (max + 1) >> 1;
-				new_leaf->size_ = max + 1 - cursor->size_;
+				cursor->size_ = (max_node_num + 1) >> 1;
+				new_leaf->size_ = max_node_num + 1 - cursor->size_;
 
 				new_leaf->children_[1] = cursor->children_[1];
 				cursor->children_[1] = new_leaf;	//后继
@@ -423,13 +423,13 @@ void bptree::BPTree::remove(const int key) {
 		}
 
 		//不需要借节点
-		if (cursor->size_ >= (max + 1) >> 1) return;
+		if (cursor->size_ >= (max_node_num + 1) >> 1) return;
 
 		//向左右兄弟借节点
 		if (l_s >= 0) {
 			//有左兄弟
 			BPTreeNode* left_sibling = cursor->children_[0];
-			if (left_sibling->size_ >= ((max + 1) >> 1) + 1) {
+			if (left_sibling->size_ >= ((max_node_num + 1) >> 1) + 1) {
 				for (int i = cursor->size_; i > 0; i--) {
 					cursor->keys_[i] = cursor->keys_[i - 1];
 					cursor->data_[i] = cursor->data_[i - 1];
@@ -444,7 +444,7 @@ void bptree::BPTree::remove(const int key) {
 		if (r_s < parent->size_) {
 			//有右兄弟
 			BPTreeNode* right_sibling = cursor->children_[1];
-			if (right_sibling->size_ >= ((max + 1) >> 1) + 1) {
+			if (right_sibling->size_ >= ((max_node_num + 1) >> 1) + 1) {
 				cursor->keys_[cursor->size_] = right_sibling->keys_[0];
 				cursor->data_[cursor->size_] = right_sibling->data_[0];
 				cursor->size_++;

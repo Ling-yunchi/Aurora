@@ -4,7 +4,7 @@
 #include "Data.h"
 
 namespace bptree {
-	constexpr int max = 10;
+	constexpr int max_node_num = 10;
 
 	class BPTree;
 	class BPTreeNode {

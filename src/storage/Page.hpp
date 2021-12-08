@@ -13,6 +13,7 @@ class page : public serializable<8 + TSize * page_max_item> {
 	int size_;
 	std::vector<T> items_;
 public:
+	void dirty();
 	bool is_dirty() const;
 	page();
 	explicit page(int id);
@@ -22,6 +23,11 @@ public:
 	char* serialize() override;
 	void unserialize(char* buffer) override;
 };
+
+template <typename T, int TSize>
+void page<T, TSize>::dirty() {
+	dirty_ = true;
+}
 
 template <typename T, int TSize>
 bool page<T, TSize>::is_dirty() const { return dirty_; }

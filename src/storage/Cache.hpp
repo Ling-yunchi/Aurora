@@ -27,6 +27,7 @@ public:
 	~Cache();
 	T& get_item(int item_id);
 	void insert_item(int item_id, const T item);
+	void set_dirty(int item_id);
 	void flush();
 protected:
 	void read_page_from_disk(int page_id);
@@ -115,6 +116,19 @@ void Cache<T, TSize>::insert_item(int item_id, T item) {
 		if (pages_.size() > max_page_num_)
 			obsolescence();
 	}
+}
+
+template <typename T, int TSize>
+void Cache<T, TSize>::set_dirty(int item_id) {
+	int page_id = id_to_page_id(item_id);
+	if (!pages_.count(page_id))
+		read_page_from_disk(page_id);
+	else {
+		//将已经在缓存中的page淘汰优先度降到最低
+		page_keys_.remove(page_id);
+		page_keys_.emplace_front(page_id);
+	}
+	return pages_.at(page_id).dirty();
 }
 
 template <typename T, int TSize>
