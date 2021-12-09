@@ -216,7 +216,7 @@ namespace test
 
 	void test_file() {
 		fstream f("./qwq.txt", ios::in | ios::out | ios::binary);
-		//Ô¤·ÖÅä¿Õ¼ä
+		//Ô¤ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½
 		f.seekp(1024 * 1024 * 10);
 		f.write("end", 3);
 	}
@@ -243,10 +243,14 @@ namespace test
 
 	}
 
+	void test_table(){
+		
+	}
+
 	inline void test_entry() {
 		logger << logger.get_now_time() << " [test] ----------start----------" << lg::endl;
 		auto start = chrono::system_clock::now();
-		test_cache();
+		test_table();
 		auto end = chrono::system_clock::now();
 		auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
 		auto cost = double(duration.count()) * chrono::microseconds::period::num / chrono::microseconds::period::den;
