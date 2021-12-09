@@ -1,2 +1,2 @@
-#program once
+#pragma once
 

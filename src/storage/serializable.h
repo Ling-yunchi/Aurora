@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 template<int storage_size>
 class serializable {
@@ -28,16 +29,16 @@ public:
 		*buf++ = '\0';
 	}
 
-	static std::string& unserialize_string(std::string& str, char*& buf) {
+	static void unserialize_string(std::string& str, char*& buf) {
 		auto tmp_buf = new char[1024];
 		int i;
 		for (i = 0; *buf != '\0'; i++)
 			tmp_buf[i] = *buf++;
 		tmp_buf[i] = '\0';
-		string str_s(tmp_buf);
+		const std::string str_s(tmp_buf);
+		str = str_s;
 		buf++;
 		delete[] tmp_buf;
-		return str_s;
 	}
 
 	static void serialize_vector(std::vector<int>& data, int size, char*& buffer) {
@@ -59,9 +60,8 @@ public:
 		auto tmp_buf = buf;
 		for (int i = 0; i < size; i++) {
 			serialize_string(data[i], tmp_buf);
-			int i;
-			for (i = 0; buf[i] != '\0'; i++)
-				*buffer++ = buf[i];
+			for (int j = 0; buf[j] != '\0'; j++)
+				*buffer++ = buf[j];
 			*buffer++ = '\0';
 			tmp_buf = buf;
 		}
@@ -78,8 +78,8 @@ public:
 		int data_size = data[0].get_storage_size();
 		for (int i = 0; i < size; i++) {
 			auto tmp = data[i].serialize();
-			for (int i = 0; i < data_size; i++)
-				*buffer++ = tmp[i];
+			for (int j = 0; j < data_size; j++)
+				*buffer++ = tmp[j];
 			delete tmp;
 		}
 	}

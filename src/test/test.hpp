@@ -1,7 +1,7 @@
 #pragma once
 //#include <boost/archive/binary_oarchive.hpp>
 #include "../log/Logger.h"
-#include "../parser/Engine.h"
+#include "../controller/Engine.h"
 #include "../storage/BPTree.h"
 #include "../storage/BTree.h"
 #include "../storage/Page.hpp"
@@ -13,6 +13,7 @@
 //#include "boost/serialization/access.hpp"
 //#include "boost/serialization/vector.hpp"
 #include "./storage/Cache.hpp"
+#include "../storage/Table.h"
 
 using namespace std;
 
@@ -216,7 +217,7 @@ namespace test
 
 	void test_file() {
 		fstream f("./qwq.txt", ios::in | ios::out | ios::binary);
-		//Ԥ����ռ�
+		//预分配空间
 		f.seekp(1024 * 1024 * 10);
 		f.write("end", 3);
 	}
@@ -243,14 +244,72 @@ namespace test
 
 	}
 
-	void test_table(){
-		
+	void test_sbptree() {
+		logger.enable_stdout(true);
+		bptree::SBPTree index_("test_idx.txt");
+		for (int i = 1; i <= 10; i++) {
+			logger << "----- insert " + to_string(i) + " -----" << lg::endl;
+			index_.insert(i, i);
+			index_.display(index_.get_root());
+		}
+		index_.display(index_.get_root());
+	}
+
+	void test_table() {
+		vector<string> columns = { "c_1","c_2","c_3" };
+		Table table("test", 3, columns);
+		bptree::SBPTree index_("test_idx.txt");
+		Cache<Row, 4 + 10 * 255> row_cache_(1000, "test_data.txt");
+
+		//for (int i = 0; i < 10000; i++) {
+		//	index_.insert(i, i);
+		//	Row a_row(3);
+		//	a_row.data_ = { "data_" + to_string(i),"data_" + to_string(i),"data_" + to_string(i) };
+		//	row_cache_.insert_item(i, a_row);
+		//}
+		//index_.insert(1, 1);
+		//Row a_row(3);
+		//a_row.data_ = { "data_1","data_2","data_3" };
+		//row_cache_.insert_item(1, a_row);
+
+		fstream fs;
+		fs.open("test.txt", std::ios::in | std::ios::out | std::ios::binary);
+
+		//if (!fs.is_open()) {
+		//	logger.error("cache init failed: file open fail");
+		//}
+
+		//auto buf = index_.serialize();
+		//fs.write(buf, index_.get_storage_size());
+		//fs.close();
+		//delete[] buf;
+
+		auto buf = new char[index_.get_storage_size()];
+		fs.read(buf, index_.get_storage_size());
+		index_.unserialize(buf);
+		delete[] buf;
+
+		default_random_engine e;
+		uniform_int<int> rand_int(0, 9999);
+
+		for (int i = 0; i < 1000; i++) {
+			int key = rand_int(e);
+			int data_id = index_.search(key);
+			auto& row = row_cache_.get_item(data_id);
+			logger << "-----data " + to_string(data_id) + "-----" << lg::endl;
+			for (int j = 0; j < row.size_; j++) {
+				logger << row.data_[j] << " ";
+			}
+			logger << lg::endl;
+		}
 	}
 
 	inline void test_entry() {
 		logger << logger.get_now_time() << " [test] ----------start----------" << lg::endl;
 		auto start = chrono::system_clock::now();
+
 		test_table();
+
 		auto end = chrono::system_clock::now();
 		auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
 		auto cost = double(duration.count()) * chrono::microseconds::period::num / chrono::microseconds::period::den;

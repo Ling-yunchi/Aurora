@@ -144,18 +144,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\controller\Engine.cpp" />
+    <ClCompile Include="src\controller\LexicalAnalysis.cpp" />
     <ClCompile Include="src\storage\SBPTree.cpp" />
     <ClCompile Include="src\storage\SBTree.cpp" />
     <ClCompile Include="src\log\Logger.cpp" />
     <ClCompile Include="src\storage\BPTree.cpp" />
     <ClCompile Include="src\storage\BTree.cpp" />
     <ClCompile Include="src\storage\Data.cpp" />
-    <ClCompile Include="src\parser\Engine.cpp" />
-    <ClCompile Include="src\parser\LexicalAnalysis.cpp" />
     <ClCompile Include="src\aurora.cpp" />
     <ClCompile Include="src\storage\Table.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\controller\Engine.h" />
+    <ClInclude Include="src\controller\LexicalAnalysis.h" />
     <ClInclude Include="src\storage\SBPTree.h" />
     <ClInclude Include="src\storage\SBTree.h" />
     <ClInclude Include="src\storage\Cache.hpp" />
@@ -163,13 +165,15 @@
     <ClInclude Include="src\storage\BPTree.h" />
     <ClInclude Include="src\storage\BTree.h" />
     <ClInclude Include="src\storage\Data.h" />
-    <ClInclude Include="src\parser\Engine.h" />
-    <ClInclude Include="src\parser\LexicalAnalysis.h" />
     <ClInclude Include="src\storage\Page.hpp" />
     <ClInclude Include="src\storage\serializable.h" />
     <ClInclude Include="src\storage\Table.h" />
     <ClInclude Include="src\test\test.hpp" />
     <ClInclude Include="src\storage\TreeCache.hpp" />
+    <ClInclude Include="src\view\help.h" />
+    <ClInclude Include="src\view\menu.hpp" />
+    <ClInclude Include="src\view\show_data.hpp" />
+    <ClInclude Include="src\view\banner.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="log.txt" />

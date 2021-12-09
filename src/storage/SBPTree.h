@@ -1,9 +1,10 @@
 #pragma once
+#include "BPTree.h"
 #include "serializable.h"
 #include "Cache.hpp"
 
 namespace bptree {
-	constexpr int max_node_num = 10;
+	//constexpr int max_node_num = 10;
 	constexpr int max_free_node = 100;
 
 	class SBPTree;
@@ -16,6 +17,7 @@ namespace bptree {
 		std::vector<int> children_;
 		std::vector<int> data_;
 	public:
+		SBPTreeNode();
 		SBPTreeNode(int id, bool leaf);
 		char* serialize() override;
 		void unserialize(char* buf) override;

@@ -1,8 +1,15 @@
 #include "Table.h"
-Table::Table(std::string filename) :
-	columns_(10),
-	index_(filename),
-	row_cache_(100, filename) {}
+
+#include <utility>
+
+Table::Table(std::string name, int column_num, std::vector<std::string>& columns) :
+	name_(std::move(name)),
+	column_num_(column_num),
+	columns_(columns) {
+
+}
+
+Table::Table() :columns_(10) {}
 
 char* Table::serialize() {
 	auto buf = new char[this->storage_size_];
@@ -18,6 +25,10 @@ void Table::unserialize(char* buf) {
 	unserialize_int(column_num_, buf);
 	unserialize_vector(columns_, column_num_, buf);
 }
+
+Row::Row() :data_(10) {}
+Row::Row(int size) : size_(size), data_(size) {}
+
 char* Row::serialize() {
 	auto buf = new char[this->storage_size_];
 	auto tmp_buf = buf;

@@ -1,16 +1,24 @@
 #include "SBPTree.h"
 
+bptree::SBPTreeNode::SBPTreeNode() :
+	keys_(max_node_num),
+	children_(max_node_num + 1),
+	data_(max_node_num) {}
+
 bptree::SBPTreeNode::SBPTreeNode(int id, bool leaf)
-	: id_(id), leaf_(leaf) {
-	if (!leaf_) {
-		keys_.resize(max_node_num);
-		children_.resize(max_node_num + 1);
-	}
-	else {
-		keys_.resize(max_node_num);
-		data_.resize(max_node_num);
-		children_.resize(2);	//此处保存prev与next
-	}
+	: id_(id), leaf_(leaf),
+	keys_(max_node_num),
+	children_(max_node_num + 1),
+	data_(max_node_num) {
+	//if (!leaf_) {
+	//	keys_.resize(max_node_num);
+	//	children_.resize(max_node_num + 1);
+	//}
+	//else {
+	//	keys_.resize(max_node_num);
+	//	data_.resize(max_node_num);
+	//	children_.resize(2);	//此处保存prev与next
+	//}
 }
 
 char* bptree::SBPTreeNode::serialize() {
@@ -119,6 +127,8 @@ void bptree::SBPTree::insert_internal(int key, int cursor, int child) {
 			new_root.children_[1] = new_internal.id_;
 			new_root.size_ = 1;
 			root_ = new_root.id_;
+
+			node_cache_.insert_item(root_, new_root);
 		}
 		else {
 			//递归调用insert_internal
@@ -271,7 +281,7 @@ int bptree::SBPTree::find_parent(int cursor, int child) {
 	return parent;
 }
 
-bptree::SBPTree::SBPTree(std::string filename) :node_cache_(100, filename) {}
+bptree::SBPTree::SBPTree(std::string filename) :node_cache_(1000, filename) {}
 
 char* bptree::SBPTree::serialize() {
 	auto buf = new char[this->storage_size_];
@@ -614,7 +624,7 @@ void bptree::SBPTree::display(int cursor) {
 			for (int i = 0; i < node(cursor).size_; i++) {
 				logger << std::to_string(node(cursor).data_[i]) << " ";
 			}
-			logger << "\nprev: " << (node(cursor).children_[0] ? std::to_string(node(node(cursor).children_[0]).id_) : "null") << " ,next: " << (node(cursor).children_[1] ? std::to_string(node(node(cursor).children_[1]).id_) : "null");
+			logger << "\nprev: " << std::to_string(node(cursor).children_[0]) << " ,next: " << std::to_string(node(cursor).children_[1]);
 		}
 		logger << "\n";
 		if (!node(cursor).leaf_) {

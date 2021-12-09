@@ -18,12 +18,6 @@
     <ClCompile Include="src\aurora.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\parser\Engine.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\parser\LexicalAnalysis.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\storage\BTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -45,14 +39,14 @@
     <ClCompile Include="src\storage\Table.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\controller\Engine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controller\LexicalAnalysis.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\parser\LexicalAnalysis.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\parser\Engine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\storage\BTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -87,6 +81,24 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\storage\Table.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\Engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\LexicalAnalysis.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\view\menu.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\view\show_data.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\view\banner.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\view\help.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
