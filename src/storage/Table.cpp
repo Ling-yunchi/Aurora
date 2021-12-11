@@ -17,6 +17,7 @@ char* Table::serialize() {
 	serialize_string(name_, tmp_buf);
 	serialize_int(column_num_, tmp_buf);
 	serialize_vector(columns_, column_num_, tmp_buf);
+	serialize_int(auto_increase_id, tmp_buf);
 	return buf;
 }
 
@@ -24,6 +25,7 @@ void Table::unserialize(char* buf) {
 	unserialize_string(name_, buf);
 	unserialize_int(column_num_, buf);
 	unserialize_vector(columns_, column_num_, buf);
+	unserialize_int(auto_increase_id, buf);
 }
 
 Row::Row() :data_(10) {}

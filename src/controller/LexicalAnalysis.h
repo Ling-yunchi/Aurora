@@ -5,7 +5,9 @@ using namespace std;
 
 enum operation
 {
-	create_table_,
+	//	tables_,
+	help_,
+	//	create_,
 	insert_,
 	select_,
 	update_,
@@ -33,6 +35,7 @@ public:
 	vector<string> get_parameter() const { return parameter; }
 	void set_str(const string& str) { this->str = str; }
 	bool is_legal() { return legal; }
+	void syntax_error();
 
 	void analysis();
 };

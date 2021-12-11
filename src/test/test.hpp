@@ -304,6 +304,17 @@ namespace test
 		}
 	}
 
+	//void test_table_manager() {
+	//	TableManager manager;
+	//	vector<string> column = { "qwq1","qwq2","qwq3" };
+	//	manager.add_table("test", 3, column);
+	//	manager.choose_table("test");
+	//	Row row(3);
+	//	row.data_ = { "qwq_1","qwq_2","qwq_3" };
+	//	manager.insert_table(row);
+	//	auto qwq = manager.search_table(1);
+	//}
+
 	inline void test_entry() {
 		logger << logger.get_now_time() << " [test] ----------start----------" << lg::endl;
 		auto start = chrono::system_clock::now();

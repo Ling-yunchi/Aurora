@@ -3,6 +3,7 @@
 
 #include "Page.hpp"
 #include "../log/Logger.h"
+#include "../service/TableManager.h"
 #include <map>
 #include <list>
 #include <fstream>

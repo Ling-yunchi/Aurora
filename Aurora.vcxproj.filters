@@ -45,6 +45,9 @@
     <ClCompile Include="src\controller\LexicalAnalysis.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\service\TableManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\storage\BTree.h">
@@ -99,6 +102,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\view\help.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\service\TableManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

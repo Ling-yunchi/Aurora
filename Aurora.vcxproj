@@ -154,6 +154,7 @@
     <ClCompile Include="src\storage\Data.cpp" />
     <ClCompile Include="src\aurora.cpp" />
     <ClCompile Include="src\storage\Table.cpp" />
+    <ClCompile Include="src\service\TableManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\controller\Engine.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="src\view\menu.hpp" />
     <ClInclude Include="src\view\show_data.hpp" />
     <ClInclude Include="src\view\banner.hpp" />
+    <ClInclude Include="src\service\TableManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="log.txt" />

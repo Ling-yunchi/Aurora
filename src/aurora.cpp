@@ -10,10 +10,9 @@ int main()
 #ifdef TEST
 	test::test_entry();
 #endif
-
-
 	string cmd;
 	Engine engine;
+	system("cls");
 	view::banner();
 	view::tip();
 	while (true) {
