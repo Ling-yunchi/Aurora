@@ -25,8 +25,10 @@ public:
 	void select_f();
 	void update_f();
 	void delete_f();
+	void test_f();
 
 
 private:
 	LexicalAnalysis lexicalAnalysis;
+	void clear();
 };

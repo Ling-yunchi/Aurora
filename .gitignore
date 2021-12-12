@@ -5,6 +5,7 @@
 
 *.txt
 *.cd
+*.dat
 
 # User-specific files
 *.rsuser

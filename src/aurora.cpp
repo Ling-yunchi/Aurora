@@ -10,6 +10,8 @@ int main()
 #ifdef TEST
 	test::test_entry();
 #endif
+
+#ifndef TEST
 	string cmd;
 	Engine engine;
 	system("cls");
@@ -21,6 +23,7 @@ int main()
 		if (cmd == "exit") break;
 		engine.analysis(cmd);
 	}
+#endif
 
 	return 0;
 }
