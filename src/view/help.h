@@ -8,8 +8,9 @@ namespace view
 			<< "table struct is { name, sex, email}\n"
 			<< "insert : to insert a data\n"
 			<< "select : to select a data\n"
-			<< "update to update a data\n"
+			<< "update : to update a data\n"
 			<< "delete : to delete a data\n"
+			<< "test : to run some test\n"
 			<< "exit : exit\n";
 	}
 	//void help() {

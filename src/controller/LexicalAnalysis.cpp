@@ -2,7 +2,17 @@
 
 #include <iostream>
 
-vector<string> split(const string& str, const char c);
+vector<string> split(const string& str, const char c) {
+	vector<string> result;
+	int lastpos = str.find_first_not_of(c, 0);
+	int pos = str.find_first_of(c, lastpos);
+	while (pos != string::npos || lastpos != string::npos) {
+		result.push_back(str.substr(lastpos, pos - lastpos));
+		lastpos = str.find_first_not_of(c, pos);
+		pos = str.find_first_of(c, lastpos);
+	}
+	return result;
+}
 
 LexicalAnalysis::LexicalAnalysis() :legal(true) {}
 
@@ -26,6 +36,7 @@ void LexicalAnalysis::analysis()
 		else if (token[0] == "insert") keyword = operation::insert_;
 		else if (token[0] == "update") keyword = operation::update_;
 		else if (token[0] == "delete") keyword = operation::delete_;
+		else if (token[0] == "test") keyword = operation::test_;
 		else if (token[0] == "cls") {
 			system("cls");
 			legal = false;
@@ -40,14 +51,3 @@ void LexicalAnalysis::analysis()
 		parameter.insert(parameter.begin(), ++token.begin(), token.end());
 }
 
-vector<string> split(const string& str, const char c) {
-	vector<string> result;
-	int lastpos = str.find_first_not_of(c, 0);
-	int pos = str.find_first_of(c, lastpos);
-	while (pos != string::npos || lastpos != string::npos) {
-		result.push_back(str.substr(lastpos, pos - lastpos));
-		lastpos = str.find_first_not_of(c, pos);
-		pos = str.find_first_of(c, lastpos);
-	}
-	return result;
-}

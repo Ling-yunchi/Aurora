@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdio>
 //#include <boost/archive/binary_oarchive.hpp>
 #include "../log/Logger.h"
 #include "../controller/Engine.h"
@@ -114,12 +115,12 @@ namespace test
 		//std::vector<int> ids(5);
 		//ids = { 2,3,4,5 };
 		//page.set_node(ids);
-		//std::ofstream out("./data.txt", std::ios::app);
+		//std::ofstream out("./data.dat", std::ios::app);
 		//out.seekp(0, ios::end);
 		//cout << out.tellp();
 		//boost::archive::binary_oarchive sout(out);
 		//sout << page;
-		////ifstream fi("./data.txt");
+		////ifstream fi("./data.dat");
 		////fi.seekg(69);
 		////cout << fi.tellg() << endl;
 		////boost::archive::binary_iarchive sin(fi);
@@ -192,7 +193,7 @@ namespace test
 
 	void test_my_serialize() {
 		logger.enable_stdout(true);
-		fstream file("./data.txt", ios::in | ios::out | ios::trunc | ios::binary);
+		fstream file("./data.dat", ios::in | ios::out | ios::trunc | ios::binary);
 		for (int i = 1; i <= 10; i++) {
 			node n;
 			n.id_ = i;
@@ -216,14 +217,14 @@ namespace test
 	}
 
 	void test_file() {
-		fstream f("./qwq.txt", ios::in | ios::out | ios::binary);
+		fstream f("./qwq.dat", ios::in | ios::out | ios::binary);
 		//预分配空间
 		f.seekp(1024 * 1024 * 10);
 		f.write("end", 3);
 	}
 
 	void test_cache() {
-		Cache<inner_node, 4> node_cache(10, "node.txt");
+		Cache<inner_node, 4> node_cache(10, "node.dat");
 		//for (int i = 0; i < 10000; i++) {
 		//	node_cache.insert_item(i, inner_node(i));
 		//}
@@ -246,7 +247,7 @@ namespace test
 
 	void test_sbptree() {
 		logger.enable_stdout(true);
-		bptree::SBPTree index_("test_idx.txt");
+		bptree::SBPTree index_("test_idx.dat");
 		for (int i = 1; i <= 10; i++) {
 			logger << "----- insert " + to_string(i) + " -----" << lg::endl;
 			index_.insert(i, i);
@@ -258,8 +259,8 @@ namespace test
 	void test_table() {
 		vector<string> columns = { "c_1","c_2","c_3" };
 		Table table("test", 3, columns);
-		bptree::SBPTree index_("test_idx.txt");
-		Cache<Row, 4 + 10 * 255> row_cache_(1000, "test_data.txt");
+		bptree::SBPTree index_("test_idx.dat");
+		Cache<Row, 4 + 10 * 255> row_cache_(1000, "test_data.dat");
 
 		//for (int i = 0; i < 10000; i++) {
 		//	index_.insert(i, i);
@@ -273,7 +274,7 @@ namespace test
 		//row_cache_.insert_item(1, a_row);
 
 		fstream fs;
-		fs.open("test.txt", std::ios::in | std::ios::out | std::ios::binary);
+		fs.open("test.dat", std::ios::in | std::ios::out | std::ios::binary);
 
 		//if (!fs.is_open()) {
 		//	logger.error("cache init failed: file open fail");
@@ -315,11 +316,18 @@ namespace test
 	//	auto qwq = manager.search_table(1);
 	//}
 
+	void test_one_line_out() {
+		for (int i = 0; i < 1000000; i++) {
+			printf("inserting row %6d : %2.2f%%", i, (double)i / 10000);
+			printf("\r");
+		}
+	}
+
 	inline void test_entry() {
 		logger << logger.get_now_time() << " [test] ----------start----------" << lg::endl;
 		auto start = chrono::system_clock::now();
 
-		test_table();
+		test_one_line_out();
 
 		auto end = chrono::system_clock::now();
 		auto duration = chrono::duration_cast<chrono::microseconds>(end - start);

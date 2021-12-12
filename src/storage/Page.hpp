@@ -4,7 +4,7 @@
 
 #include "serializable.h"
 
-constexpr int page_max_item = 10;
+constexpr int page_max_item = 100;
 
 template<typename T, int TSize>
 class page : public serializable<8 + TSize * page_max_item> {

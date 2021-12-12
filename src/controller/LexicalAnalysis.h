@@ -8,6 +8,7 @@ enum operation
 	//	tables_,
 	help_,
 	//	create_,
+	test_,
 	insert_,
 	select_,
 	update_,
@@ -40,3 +41,4 @@ public:
 	void analysis();
 };
 
+vector<string> split(const string& str, const char c);
