@@ -38,13 +38,14 @@ namespace bptree {
 		int find_parent(int cursor, int child);
 	public:
 		explicit SBPTree(std::string filename);
+		~SBPTree();
 		char* serialize() override;
 		void unserialize(char* buf) override;
 		int search(int key);
 		void insert(int key, int data);
 		void remove(int key);
 		void display(int cursor);
-		int get_root();
+		int get_root() const;
 	};
 }
 

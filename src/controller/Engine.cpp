@@ -1,4 +1,6 @@
 ﻿#include "Engine.h"
+
+#include <chrono>
 #include <iostream>
 #include "../view/help.h"
 #include "../storage/Table.h"
@@ -91,7 +93,7 @@ void Engine::print_prompt()
 	cout << "aurora > ";
 }
 
-void Engine::help() {
+void Engine::help() const {
 	view::help();
 }
 
@@ -119,12 +121,13 @@ void Engine::select_f() {
 	cin.get();
 	if (id != -1) {
 		int data_id = index_->search(id);
-		auto& row = row_cache_->get_item(data_id);
-		auto& data = row.data_;
 		if (data_id == 0)
 			cout << "don't find data" << endl;
-		else
+		else {
+			auto& row = row_cache_->get_item(data_id);
+			auto& data = row.data_;
 			cout << "row id: " << data_id << ", data: " << data[0] << " " << data[1] << " " << data[2] << endl;
+		}
 	}
 }
 
@@ -194,16 +197,20 @@ void Engine::test_f() {
 			cout << "invalid n" << endl;
 			return;
 		}
+		auto start = chrono::system_clock::now();
 		Row row(3);
 		for (int i = 1; i <= n; i++) {
 			printf("inserting row %d : %2.2f%%", i, (double)i / n * 100);
-			row.data_ = { ("test_" + to_string(i)),(i % 2 ? "male" : "female"),(to_string(i) + "@test.com") };
+			row.data_ = { ("test_" + to_string(i)),i % 2 ? "male" : "female",(to_string(i) + "@test.com") };
 			index_->insert(table_->auto_increase_id, table_->auto_increase_id);
 			row_cache_->insert_item(table_->auto_increase_id, row);
 			table_->auto_increase_id++;
 			printf("\r");
 		}
-		printf("i");
+		auto end = chrono::system_clock::now();
+		auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+		auto cost = double(duration.count()) * chrono::microseconds::period::num / chrono::microseconds::period::den;
+		cout << "\ninsert finished at " + to_string(cost) + " seconds";
 		cout << "\ninsert " << n << " row complete" << endl;
 	}
 	else if (token[0] == "clear") {
@@ -216,6 +223,10 @@ void Engine::test_f() {
 }
 
 void Engine::clear() {
+	delete table_;
+	delete index_;
+	delete row_cache_;
+
 	remove("test.dat");
 	remove("test_i.dat");
 	remove("test_idx.dat");

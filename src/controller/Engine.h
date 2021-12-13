@@ -18,7 +18,7 @@ public:
 	void analysis(std::string& cmd);
 	void print_prompt();
 
-	void help();
+	void help() const;
 
 	//void create();
 	void insert_f();

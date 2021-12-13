@@ -3,7 +3,9 @@
 bptree::SBPTreeNode::SBPTreeNode() :
 	keys_(max_node_num),
 	children_(max_node_num + 1),
-	data_(max_node_num) {}
+	data_(max_node_num),
+	leaf_(false),
+	id_(-1) {}
 
 bptree::SBPTreeNode::SBPTreeNode(int id, bool leaf)
 	: id_(id), leaf_(leaf),
@@ -282,6 +284,9 @@ int bptree::SBPTree::find_parent(int cursor, int child) {
 }
 
 bptree::SBPTree::SBPTree(std::string filename) :node_cache_(1000, filename) {}
+bptree::SBPTree::~SBPTree() {
+
+}
 
 char* bptree::SBPTree::serialize() {
 	auto buf = new char[this->storage_size_];
@@ -635,6 +640,6 @@ void bptree::SBPTree::display(int cursor) {
 	}
 }
 
-int bptree::SBPTree::get_root() {
+int bptree::SBPTree::get_root() const {
 	return root_;
 }

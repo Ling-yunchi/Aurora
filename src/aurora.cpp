@@ -24,6 +24,5 @@ int main()
 		engine.analysis(cmd);
 	}
 #endif
-
 	return 0;
 }

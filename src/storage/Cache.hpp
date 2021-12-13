@@ -58,9 +58,10 @@ Cache<T, TSize>::Cache(int max_page_num, std::string filename) :
 		logger.error("cache init failed: file open fail");
 	}
 
+	disk.seekg(0);
 	auto buf = new char[4];
+	disk.read(buf, 4);
 	auto tmp_buf = buf;
-	disk.read(tmp_buf, 4);
 	serializable<0>::unserialize_int(disk_page_size_, tmp_buf);
 	delete[] buf;
 

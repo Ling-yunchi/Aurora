@@ -28,7 +28,7 @@ void Table::unserialize(char* buf) {
 	unserialize_int(auto_increase_id, buf);
 }
 
-Row::Row() :data_(10) {}
+Row::Row() :size_(0), data_(10) {}
 Row::Row(int size) : size_(size), data_(size) {}
 
 char* Row::serialize() {

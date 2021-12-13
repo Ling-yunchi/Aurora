@@ -33,12 +33,12 @@ template <typename T, int TSize>
 bool page<T, TSize>::is_dirty() const { return dirty_; }
 
 template <typename T, int TSize>
-page<T, TSize>::page() :id_(-1), size_(0) {
+page<T, TSize>::page() :dirty_(false), id_(-1), size_(0) {
 	items_.resize(page_max_item);
 }
 
 template <typename T, int TSize>
-page<T, TSize>::page(int id) : id_(id), size_(0) {
+page<T, TSize>::page(int id) : id_(id), size_(0), dirty_(false) {
 	items_.resize(page_max_item);
 }
 
